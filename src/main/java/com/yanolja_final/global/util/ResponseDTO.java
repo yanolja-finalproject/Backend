@@ -1,5 +1,6 @@
 package com.yanolja_final.global.util;
 
+import com.yanolja_final.global.exception.ErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -8,37 +9,45 @@ import org.springframework.http.HttpStatus;
 public class ResponseDTO<T> {
 
     private final int code;
-    private final String message;
     private final T data;
+    private final String errorMessage;
 
     @Builder
-    private ResponseDTO(int code, String message, T data) {
+    private ResponseDTO(int code, String errorMessage, T data) {
         this.code = code;
-        this.message = message;
+        this.errorMessage = errorMessage;
         this.data = data;
     }
 
-    public static ResponseDTO<Object> res(final HttpStatus httpStatus, final String message) {
-        return ResponseDTO.<Object>builder()
-            .code(httpStatus.value())
-            .message(message)
+    public static ResponseDTO<Void> ok() {
+        return ResponseDTO.<Void>builder()
+            .code(HttpStatus.OK.value())
+            .data(null)
+            .errorMessage(null)
             .build();
     }
 
-    public static <T> ResponseDTO<T> res(final HttpStatus httpStatus, final T data) {
+    public static <T> ResponseDTO<T> okWithData(T data) {
         return ResponseDTO.<T>builder()
-            .code(httpStatus.value())
+            .code(HttpStatus.OK.value())
             .data(data)
+            .errorMessage(null)
             .build();
     }
 
-    public static <T> ResponseDTO<T> res(final HttpStatus httpStatus,
-        final String message,
-        final T data) {
-        return ResponseDTO.<T>builder()
+    public static ResponseDTO<Void> error(ErrorCode errorCode) {
+        return ResponseDTO.<Void>builder()
+            .code(errorCode.getHttpStatus().value())
+            .errorMessage(errorCode.getMessage())
+            .data(null)
+            .build();
+    }
+
+    public static ResponseDTO<Void> errorWithMessage(HttpStatus httpStatus, String errorMessage) {
+        return ResponseDTO.<Void>builder()
             .code(httpStatus.value())
-            .message(message)
-            .data(data)
+            .errorMessage(errorMessage)
+            .data(null)
             .build();
     }
 }

@@ -14,35 +14,35 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionRestAdvice {
 
     @ExceptionHandler
-    public ResponseEntity<ResponseDTO<Object>> applicationException(ApplicationException e) {
+    public ResponseEntity<ResponseDTO<Void>> applicationException(ApplicationException e) {
         log.error(e.getMessage(), e);
         return ResponseEntity
             .status(e.getErrorCode().getHttpStatus())
-            .body(ResponseDTO.res(e.getErrorCode().getHttpStatus(), e.getErrorCode().getMessage()));
+            .body(ResponseDTO.error(e.getErrorCode()));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ResponseDTO<Object>> bindException(BindException e) {
+    public ResponseEntity<ResponseDTO<Void>> bindException(BindException e) {
         log.error(e.getMessage(), e);
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
-            .body(ResponseDTO.res(HttpStatus.BAD_REQUEST,
+            .body(ResponseDTO.errorWithMessage(HttpStatus.BAD_REQUEST,
                 e.getBindingResult().getAllErrors().get(0).getDefaultMessage()));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ResponseDTO<Object>> dbException(DataAccessException e) {
+    public ResponseEntity<ResponseDTO<Void>> dbException(DataAccessException e) {
         log.error(e.getMessage(), e);
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ResponseDTO.res(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러!"));
+            .body(ResponseDTO.errorWithMessage(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러!"));
     }
 
     @ExceptionHandler
-    public ResponseEntity<ResponseDTO<Object>> serverException(RuntimeException e) {
+    public ResponseEntity<ResponseDTO<Void>> serverException(RuntimeException e) {
         log.error(e.getMessage(), e);
         return ResponseEntity
             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ResponseDTO.res(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러!"));
+            .body(ResponseDTO.errorWithMessage(HttpStatus.INTERNAL_SERVER_ERROR, "서버 에러!"));
     }
 }
