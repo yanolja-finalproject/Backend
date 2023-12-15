@@ -19,4 +19,16 @@ public class AppConfig {
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper;
     }
+
+    // 임시 Security 설정
+    @Bean
+    public SecurityFilterChain temporarySecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+                .anyRequest().permitAll())
+            .sessionManagement(sessionManagement -> sessionManagement
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        return http.build();
+    }
 }
