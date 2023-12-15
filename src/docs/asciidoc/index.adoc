@@ -5,8 +5,6 @@
 :toc: left
 :toc-levels: 4
 :sect-links:
-:operation-curl-request-title: Example request
-:operation-http-response-title: Example response
 
 == POST /v1/user 회원가입
 
