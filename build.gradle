@@ -24,15 +24,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     annotationProcessor 'org.projectlombok:lombok'
-
+    runtimeOnly 'com.h2database:h2'
 
     //mysql
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // yml
     implementation 'org.yaml:snakeyaml:+'
-
-
 }
 
 tasks.named('bootBuildImage') {
