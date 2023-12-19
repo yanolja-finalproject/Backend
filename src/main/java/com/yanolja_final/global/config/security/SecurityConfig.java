@@ -1,17 +1,24 @@
 package com.yanolja_final.global.config.security;
 
+import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
+    private static final String[] WHITELIST_FOR_ALL_METHOD
+        = {};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -28,8 +35,11 @@ public class SecurityConfig {
             headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
         );
 
+        // REST API의 URI에 대한 인가 적용/미적용 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-            .anyRequest().permitAll()
+            .requestMatchers(WHITELIST_FOR_ALL_METHOD).permitAll()
+            .requestMatchers(HttpMethod.POST.name(), "/v1/user").permitAll()
+            .anyRequest().authenticated()
         );
 
         return http.build();
