@@ -20,7 +20,7 @@ public class UserController {
     private final UserFacade userFacade;
 
     @PostMapping
-    public ResponseEntity<?> signUp(
+    public ResponseEntity<ResponseDTO<SignUpResponse>> signUp(
         @RequestBody @Valid SignUpRequest signUpRequest
     ) {
         SignUpResponse signUpResponse = userFacade.signUp(signUpRequest);
