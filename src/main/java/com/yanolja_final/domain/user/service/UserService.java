@@ -2,11 +2,12 @@ package com.yanolja_final.domain.user.service;
 
 import com.yanolja_final.domain.user.controller.request.SignUpRequest;
 import com.yanolja_final.domain.user.controller.response.SignUpResponse;
+import com.yanolja_final.domain.user.entity.Authority;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.exception.UserAlreadyRegisteredException;
 import com.yanolja_final.domain.user.repository.UserRepository;
-import com.yanolja_final.global.exception.ApplicationException;
-import com.yanolja_final.global.exception.ErrorCode;
+import java.util.Collections;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class UserService {
 
+    public static final Set<Authority> DEFAULT_AUTHORITIES =
+        Collections.singleton(new Authority("ROLE_USER"));
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -27,7 +30,7 @@ public class UserService {
         }
 
         String encryptedPassword = passwordEncoder.encode(signUpRequest.password());
-        User user = signUpRequest.toEntity(encryptedPassword);
+        User user = signUpRequest.toEntity(encryptedPassword, DEFAULT_AUTHORITIES);
 
         User savedUser = userRepository.save(user);
         return SignUpResponse.from(savedUser);
