@@ -1,6 +1,8 @@
 package com.yanolja_final.global.config.security;
 
-import java.util.Arrays;
+import com.yanolja_final.global.config.security.jwt.JwtFilter;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,15 +12,17 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private static final String[] WHITELIST_FOR_ALL_METHOD
         = {};
+
+    private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,11 +39,27 @@ public class SecurityConfig {
             headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
         );
 
+        http.exceptionHandling(exceptionHandling -> exceptionHandling
+            .accessDeniedHandler(
+                (request, response, accessDeniedException)
+                    -> response.sendError(HttpServletResponse.SC_FORBIDDEN)
+            )
+            .authenticationEntryPoint(
+                (request, response, accessDeniedException)
+                    -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+            )
+        );
+
         // REST API의 URI에 대한 인가 적용/미적용 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
             .requestMatchers(WHITELIST_FOR_ALL_METHOD).permitAll()
             .requestMatchers(HttpMethod.POST.name(), "/v1/user").permitAll()
             .anyRequest().authenticated()
+        );
+
+        http.addFilterBefore(
+            jwtFilter,
+            UsernamePasswordAuthenticationFilter.class
         );
 
         return http.build();
