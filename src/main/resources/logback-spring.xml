@@ -15,6 +15,10 @@
     </encoder>
     <file>${LOGS}/spring-boot-logger.log</file>
 
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
       <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
       <maxHistory>20</maxHistory>
@@ -29,7 +33,7 @@
 
   <property name="LOGS" value="./logs"/>
 
-  <root level="ERROR">
+  <root level="INFO">
     <appender-ref ref="CONSOLE"/>
     <appender-ref ref="RollingFile"/>
   </root>
