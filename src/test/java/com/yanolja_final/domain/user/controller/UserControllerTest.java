@@ -35,10 +35,9 @@ public class UserControllerTest {
 
     @Autowired
     private WebApplicationContext context;
-    private MockMvc mockMvc;
-
     @Autowired
     private ObjectMapper objectMapper;
+    private MockMvc mockMvc;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider restDocumentation) {
