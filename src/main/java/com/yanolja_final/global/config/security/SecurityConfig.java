@@ -2,6 +2,7 @@ package com.yanolja_final.global.config.security;
 
 import com.yanolja_final.global.config.security.jwt.JwtFilter;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @EnableWebSecurity
 @Configuration
@@ -52,8 +55,14 @@ public class SecurityConfig {
 
         // REST API의 URI에 대한 인가 적용/미적용 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-            .requestMatchers(WHITELIST_FOR_ALL_METHOD).permitAll()
-            .requestMatchers(HttpMethod.POST.name(), "/v1/user").permitAll()
+            .requestMatchers(
+                Arrays.stream(WHITELIST_FOR_ALL_METHOD)
+                    .map(AntPathRequestMatcher::new)
+                    .toArray(RequestMatcher[]::new)
+            ).permitAll()
+            .requestMatchers(
+                new AntPathRequestMatcher("/v1/user", HttpMethod.POST.name())
+            ).permitAll()
             .anyRequest().authenticated()
         );
 
