@@ -17,9 +17,8 @@ public enum ErrorCode {
     // 5xx
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러");
 
-
-    private HttpStatus httpStatus;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String message;
 
     ErrorCode(HttpStatus httpStatus, String message) {
         this.httpStatus = httpStatus;
