@@ -5,6 +5,7 @@ import com.yanolja_final.domain.user.controller.response.SignUpResponse;
 import com.yanolja_final.domain.user.entity.Authority;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.exception.UserAlreadyRegisteredException;
+import com.yanolja_final.domain.user.exception.UserNotFoundException;
 import com.yanolja_final.domain.user.repository.UserRepository;
 import java.util.Collections;
 import java.util.Set;
@@ -34,5 +35,10 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
         return SignUpResponse.from(savedUser);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+            .orElseThrow(UserNotFoundException::new);
     }
 }
