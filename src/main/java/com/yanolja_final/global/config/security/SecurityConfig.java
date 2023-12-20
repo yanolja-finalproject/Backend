@@ -23,7 +23,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class SecurityConfig {
 
     private static final String[] WHITELIST_FOR_ALL_METHOD
-        = { "/v1/docs/**" };
+        = { "/v1/docs/**", "/v1/auth/login" };
 
     private final JwtFilter jwtFilter;
 
