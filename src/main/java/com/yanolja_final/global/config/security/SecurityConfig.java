@@ -22,8 +22,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private static final String[] WHITELIST_FOR_ALL_METHOD
-        = { "/v1/docs/**", "/v1/auth/login" };
+    private static final String[] ALLOWED_PATHS
+        = { "/v1/docs/**" };
 
     private final JwtFilter jwtFilter;
 
@@ -56,7 +56,7 @@ public class SecurityConfig {
         // REST API의 URI에 대한 인가 적용/미적용 설정
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
             .requestMatchers(
-                Arrays.stream(WHITELIST_FOR_ALL_METHOD)
+                Arrays.stream(ALLOWED_PATHS)
                     .map(AntPathRequestMatcher::new)
                     .toArray(RequestMatcher[]::new)
             ).permitAll()
