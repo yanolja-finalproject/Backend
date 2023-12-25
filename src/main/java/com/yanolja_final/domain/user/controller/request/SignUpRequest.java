@@ -1,9 +1,11 @@
 package com.yanolja_final.domain.user.controller.request;
 
+import com.yanolja_final.domain.user.entity.Authority;
 import com.yanolja_final.domain.user.entity.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.Set;
 
 public record SignUpRequest(
     @Email(message = "email의 형식이 잘못됐습니다.")
@@ -15,10 +17,11 @@ public record SignUpRequest(
     String password
 ) {
 
-    public User toEntity(String encryptedPassword) {
+    public User toEntity(String encryptedPassword, Set<Authority> authorities) {
         return User.builder()
             .email(email)
             .encryptedPassword(encryptedPassword)
+            .authorities(authorities)
             .build();
     }
 }

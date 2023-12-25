@@ -6,9 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,9 +30,17 @@ public class User extends BaseTimeEntity {
 
     private String encryptedPassword;
 
+    @ManyToMany
+    @JoinTable(
+        name = "user_authority",
+        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn})
+    private Set<Authority> authorities;
+
     @Builder
-    private User(String email, String encryptedPassword) {
+    private User(String email, String encryptedPassword, Set<Authority> authorities) {
         this.email = email;
         this.encryptedPassword = encryptedPassword;
+        this.authorities = authorities;
     }
 }
