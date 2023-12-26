@@ -4,6 +4,8 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  config:
+    import: optional:file:.env[.properties]
 
   h2:
     console:
