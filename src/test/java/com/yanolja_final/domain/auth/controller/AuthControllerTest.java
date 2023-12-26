@@ -1,20 +1,22 @@
-package com.yanolja_final.domain.user.controller;
+package com.yanolja_final.domain.auth.controller;
 
-import static org.hamcrest.Matchers.is;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yanolja_final.domain.user.controller.request.SignUpRequest;
+import com.yanolja_final.domain.auth.controller.request.LoginRequest;
+import com.yanolja_final.testutils.ControllerTestFixtureFactory;
+import com.yanolja_final.testutils.fixture.UserFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +33,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @ExtendWith(RestDocumentationExtension.class)
-public class UserControllerTest {
+public class AuthControllerTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -39,23 +41,26 @@ public class UserControllerTest {
     private ObjectMapper objectMapper;
     private MockMvc mockMvc;
 
+    @Autowired
+    private ControllerTestFixtureFactory fixture;
+
     @BeforeEach
     void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
             .apply(documentationConfiguration(restDocumentation)).build();
     }
 
-    @DisplayName("POST /user (회원가입)")
     @Test
-    void signUp() throws Exception {
+    @DisplayName("POST /auth/login (로그인)")
+    void login() throws Exception {
         // given
-        String email = "a@a.com";
-        SignUpRequest request = new SignUpRequest(email, "password");
+        UserFixture userFixture = fixture.signUp();
+        LoginRequest request = new LoginRequest(userFixture.getEmail(), userFixture.getPassword());
         String content = objectMapper.writeValueAsString(request);
 
         // when
         ResultActions result = this.mockMvc
-            .perform(post("/v1/user")
+            .perform(post("/v1/auth/login")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
@@ -64,10 +69,10 @@ public class UserControllerTest {
         // then
         result
             .andExpect(status().isOk())
-            .andExpect(jsonPath("data.email", is(email)));
+            .andExpect(cookie().exists("accessToken"));
 
         // restdocs
-        result.andDo(document("user/signup",
+        result.andDo(document("auth/login",
             requestFields(
                 fieldWithPath("email").type(STRING)
                     .description("이메일"),
@@ -75,12 +80,12 @@ public class UserControllerTest {
                     .description("비밀번호")
             ),
             responseFields(
-                fieldWithPath("code").ignored(),
-                fieldWithPath("data.id").type(NUMBER)
-                    .description("가입된 회원의 id(고유 번호)"),
-                fieldWithPath("data.email").type(STRING)
-                    .description("가입된 회원의 email")
-            ))
-        );
+                fieldWithPath("code").ignored()
+            ),
+            responseHeaders(
+                headerWithName("Set-Cookie")
+                    .description("쿠키에 JWT 액세스 토큰 설정")
+            )
+        ));
     }
 }

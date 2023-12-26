@@ -9,7 +9,9 @@ import static org.mockito.Mockito.when;
 import com.yanolja_final.domain.user.controller.request.SignUpRequest;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.exception.UserAlreadyRegisteredException;
+import com.yanolja_final.domain.user.exception.UserNotFoundException;
 import com.yanolja_final.domain.user.repository.UserRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +49,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("이미 등록된 이메일이라면 예외가 발생한다")
+    @DisplayName("이미 등록된 이메일로 가입하려하면 예외가 발생한다")
     void signUp_fail_for_duplicated_email() {
         // given
         SignUpRequest request = new SignUpRequest("a@a.com", "password");
@@ -58,5 +60,31 @@ public class UserServiceTest {
         // when, then
         assertThatThrownBy(() -> userService.signUp(request))
             .isInstanceOf(UserAlreadyRegisteredException.class);
+    }
+
+    @Test
+    @DisplayName("이메일로 User 찾기에 성공한다")
+    void findByEmail_sucess() {
+        // given
+        String email = "a@a.com";
+        when(userRepository.findByEmail(email))
+            .thenReturn(Optional.of(User.builder().email(email).build()));
+
+        // when, then
+        assertThatNoException()
+            .isThrownBy(() -> userService.findByEmail(email));
+    }
+
+    @Test
+    @DisplayName("가입되지 않은 이메일이라면 이메일로 User 찾기에 실패한다")
+    void findByEmail_fail_for_not_found() {
+        // given
+        String email = "a@a.com";
+        when(userRepository.findByEmail(email))
+            .thenReturn(Optional.empty());
+
+        // when, then
+        assertThatThrownBy(() -> userService.findByEmail(email))
+            .isInstanceOf(UserNotFoundException.class);
     }
 }
