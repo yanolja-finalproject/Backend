@@ -23,7 +23,10 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class SecurityConfig {
 
     private static final String[] ALLOWED_PATHS
-        = { "/v1/docs/**" };
+        = {
+        "/v1/docs/**",
+        "/email/**",
+    };
 
     private final JwtFilter jwtFilter;
 
