@@ -35,11 +35,12 @@ public class EmailController {
         @PathVariable("code") String code) {
         boolean isVerified = emailService.verifyEmailCode(email, code);
         if (isVerified) {
-            return ResponseEntity.ok(ResponseDTO.okWithData(true));
+            return ResponseEntity.ok(ResponseDTO.ok());
         } else {
             return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(ResponseDTO.errorWithMessage(HttpStatus.BAD_REQUEST, "이메일 인증 실패."));
         }
     }
+
 }
