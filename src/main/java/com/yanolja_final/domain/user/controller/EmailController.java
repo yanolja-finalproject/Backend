@@ -1,6 +1,5 @@
 package com.yanolja_final.domain.user.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ import com.yanolja_final.global.util.ResponseDTO;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/email")
+@RequestMapping("/v1/email")
 public class EmailController {
 
     private final EmailService emailService;
@@ -42,5 +41,4 @@ public class EmailController {
                 .body(ResponseDTO.errorWithMessage(HttpStatus.BAD_REQUEST, "이메일 인증 실패."));
         }
     }
-
 }
