@@ -2,6 +2,7 @@ package com.yanolja_final.domain.user.service;
 
 import com.yanolja_final.domain.user.exception.EmailSendingException;
 import com.yanolja_final.domain.user.exception.EmailTemplateLoadException;
+import com.yanolja_final.domain.user.exception.EmailVerificationException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -45,9 +46,11 @@ public class EmailService {
         }
     }
 
-    public boolean verifyEmailCode(String email, String code) {
+    public void verifyEmailCode(String email, String code) {
         String storedCode = verificationCodes.get(email);
-        return storedCode != null && storedCode.equals(code);
+        if (storedCode == null || !storedCode.equals(code)) {
+            throw new EmailVerificationException();
+        }
     }
 
     private String generateAuthCode() {

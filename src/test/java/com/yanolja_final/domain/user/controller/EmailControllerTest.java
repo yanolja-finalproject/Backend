@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
@@ -73,7 +74,7 @@ public class EmailControllerTest {
 
     @Test
     void verifyEmail() throws Exception {
-        given(emailService.verifyEmailCode("user@example.com", "123456")).willReturn(true);
+        doNothing().when(emailService).verifyEmailCode("user@example.com", "123456");
 
         this.mockMvc.perform(get("/v1/email/verify/123456")
                 .param("email", "user@example.com"))

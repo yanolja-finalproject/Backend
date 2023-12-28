@@ -1,5 +1,6 @@
 package com.yanolja_final.domain.user.service;
 
+import com.yanolja_final.domain.user.exception.EmailVerificationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,10 +58,8 @@ class EmailServiceTest {
         Map<String, String> mockVerificationCodes = new HashMap<>();
         mockVerificationCodes.put(email, authCode);
         ReflectionTestUtils.setField(emailService, "verificationCodes", mockVerificationCodes);
-        // Act
-        boolean result = emailService.verifyEmailCode(email, authCode);
-        // Assert
-        assertTrue(result);
+        // Act & Assert
+        assertDoesNotThrow(() -> emailService.verifyEmailCode(email, authCode));
     }
 
     @Test
@@ -68,10 +67,13 @@ class EmailServiceTest {
     void verifyEmailCode_Failure() {
         // Arrange
         String email = "test@example.com";
-        String code = "incorrect";
-        // Act
-        boolean result = emailService.verifyEmailCode(email, code);
-        // Assert
-        assertFalse(result);
+        String wrongCode = "incorrect";
+        // Inject
+        Map<String, String> mockVerificationCodes = new HashMap<>();
+        mockVerificationCodes.put(email, "correctCode");
+        ReflectionTestUtils.setField(emailService, "verificationCodes", mockVerificationCodes);
+        // Act & Assert
+        assertThrows(
+            EmailVerificationException.class, () -> emailService.verifyEmailCode(email, wrongCode));
     }
 }

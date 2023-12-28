@@ -1,5 +1,6 @@
 package com.yanolja_final.domain.user.controller;
 
+import com.yanolja_final.domain.user.exception.EmailVerificationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,15 +31,8 @@ public class EmailController {
     }
 
     @GetMapping("/verify/{code}")
-    public ResponseEntity<ResponseDTO<Void>> verifyEmail(@RequestParam("email") String email,
-        @PathVariable("code") String code) {
-        boolean isVerified = emailService.verifyEmailCode(email, code);
-        if (isVerified) {
-            return ResponseEntity.ok(ResponseDTO.ok());
-        } else {
-            return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ResponseDTO.errorWithMessage(HttpStatus.BAD_REQUEST, "이메일 인증 실패."));
-        }
+    public ResponseEntity<ResponseDTO<Void>> verifyEmail(@RequestParam("email") String email, @PathVariable("code") String code) {
+        emailService.verifyEmailCode(email, code);
+        return ResponseEntity.ok(ResponseDTO.ok());
     }
 }
