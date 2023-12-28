@@ -1,0 +1,57 @@
+= USER API Documentation
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toc-levels: 2
+
+
+== 회원가입
+
+=== HttpRequest
+
+include::{snippets}/user/signup/http-request.adoc[]
+
+include::{snippets}/user/signup/request-fields.adoc[]
+
+=== HttpResponse
+
+include::{snippets}/user/signup/http-response.adoc[]
+
+include::{snippets}/user/signup/response-fields.adoc[]
+
+== 로그인
+
+=== HttpRequest
+
+include::{snippets}/auth/login/http-request.adoc[]
+
+include::{snippets}/auth/login/request-fields.adoc[]
+
+=== HttpResponse
+
+include::{snippets}/auth/login/http-response.adoc[]
+
+include::{snippets}/auth/login/response-headers.adoc[]
+
+== 인증번호 전송
+
+=== HttpRequest
+
+include::{snippets}/email/confirmation/http-request.adoc[]
+include::{snippets}/email/confirmation/request-fields.adoc[]
+
+=== HttpResponse
+
+include::{snippets}/email/confirmation/http-response.adoc[]
+
+== 인증번호 비교
+
+=== HttpRequest
+
+include::{snippets}/email/verify/http-request.adoc[]
+
+=== HttpResponse
+
+include::{snippets}/email/verify/http-response.adoc[]
+
