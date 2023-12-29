@@ -38,7 +38,7 @@ public class User extends BaseTimeEntity {
 
     private String image;
 
-    private boolean isTermsAgreed = false; // 약관동의 여부
+    private boolean isTermsAgreed = false;
 
     @ManyToMany
     @JoinTable(
@@ -48,8 +48,8 @@ public class User extends BaseTimeEntity {
     private Set<Authority> authorities;
 
     @Builder
-    private User(String email, String phoneNumber, String username, String encryptedPassword,
-        boolean isTermsAgreed, Set<Authority> authorities) {
+    private User(String email, String phoneNumber, String username,
+        String encryptedPassword,boolean isTermsAgreed, Set<Authority> authorities) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
@@ -57,7 +57,6 @@ public class User extends BaseTimeEntity {
         this.isTermsAgreed = isTermsAgreed;
         this.authorities = authorities;
     }
-
 
     @Override
     public void restore() {
