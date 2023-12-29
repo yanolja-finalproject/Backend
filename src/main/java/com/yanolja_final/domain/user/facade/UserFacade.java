@@ -1,22 +1,24 @@
 package com.yanolja_final.domain.user.facade;
 
-import com.yanolja_final.domain.user.controller.request.SignUpRequest;
-import com.yanolja_final.domain.user.controller.response.SignUpResponse;
+import com.yanolja_final.domain.user.dto.request.CreateUserRequest;
+import com.yanolja_final.domain.user.dto.response.CreateUserResponse;
 import com.yanolja_final.domain.user.service.EmailService;
 import com.yanolja_final.domain.user.service.UserService;
+import com.yanolja_final.global.util.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class UserFacade {
 
     private final UserService userService;
+
     private final EmailService emailService;
 
-    public SignUpResponse signUp(SignUpRequest signUpRequest) {
-        return userService.signUp(signUpRequest);
+    public ResponseDTO<CreateUserResponse> signUp(CreateUserRequest createUserRequest) {
+        ResponseDTO<CreateUserResponse> signUpResponse = userService.registerOrRecoverUser(createUserRequest);
+        return signUpResponse;
     }
 
     public void sendVerificationEmail(String email) throws Exception {
@@ -25,5 +27,9 @@ public class UserFacade {
 
     public void verifyEmailCode(String email, String code) {
         emailService.verifyEmailCode(email, code);
+    }
+
+    public void deleteUser(Long userId) {
+        userService.deleteUser(userId);
     }
 }
