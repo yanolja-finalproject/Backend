@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,19 +29,43 @@ public class User extends BaseTimeEntity {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
+    private String phoneNumber;
+
+    private String username;
+
     private String encryptedPassword;
+
+    private String image;
+
+    private boolean isTermsAgreed = false; // 약관동의 여부
 
     @ManyToMany
     @JoinTable(
         name = "user_authority",
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn})
+        inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities;
 
     @Builder
-    private User(String email, String encryptedPassword, Set<Authority> authorities) {
+    private User(String email, String phoneNumber, String username, String encryptedPassword,
+        boolean isTermsAgreed, Set<Authority> authorities) {
         this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
         this.encryptedPassword = encryptedPassword;
+        this.isTermsAgreed = isTermsAgreed;
         this.authorities = authorities;
+    }
+
+
+    @Override
+    public void restore() {
+        super.restore();
+    }
+
+    @Override
+    public void delete(LocalDateTime currentTime) {
+        super.delete(currentTime);
     }
 }
