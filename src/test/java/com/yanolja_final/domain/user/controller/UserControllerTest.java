@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -14,7 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yanolja_final.domain.user.controller.request.SignUpRequest;
+import com.yanolja_final.domain.user.dto.request.CreateUserRequest;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +37,7 @@ public class UserControllerTest {
     private WebApplicationContext context;
     @Autowired
     private ObjectMapper objectMapper;
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -45,12 +46,16 @@ public class UserControllerTest {
             .apply(documentationConfiguration(restDocumentation)).build();
     }
 
-    @DisplayName("POST /user (회원가입)")
+    @DisplayName("POST /v1/user (회원가입)")
     @Test
-    void signUp() throws Exception {
+    void signUp_success() throws Exception {
         // given
         String email = "a@a.com";
-        SignUpRequest request = new SignUpRequest(email, "password");
+        String username = "username1";
+        String password = "password1";
+        String phoneNumber = "010-1234-5678";
+
+        CreateUserRequest request = new CreateUserRequest(email, username, password, phoneNumber);
         String content = objectMapper.writeValueAsString(request);
 
         // when
@@ -64,22 +69,24 @@ public class UserControllerTest {
         // then
         result
             .andExpect(status().isOk())
-            .andExpect(jsonPath("data.email", is(email)));
+            .andExpect(jsonPath("data.email", is(email)))
+            .andExpect(jsonPath("data.username", is(username)))
+            .andExpect(jsonPath("data.phoneNumber", is(phoneNumber)));
 
         // restdocs
-        result.andDo(document("user/signup",
+        result.andDo(document("v1/user",
             requestFields(
-                fieldWithPath("email").type(STRING)
-                    .description("이메일"),
-                fieldWithPath("password").type(STRING)
-                    .description("비밀번호")
+                fieldWithPath("email").type(STRING).description("이메일"),
+                fieldWithPath("username").type(STRING).description("사용자 이름"),
+                fieldWithPath("password").type(STRING).description("비밀번호"),
+                fieldWithPath("phoneNumber").type(STRING).description("전화 번호")
             ),
             responseFields(
                 fieldWithPath("code").ignored(),
-                fieldWithPath("data.id").type(NUMBER)
-                    .description("가입된 회원의 id(고유 번호)"),
-                fieldWithPath("data.email").type(STRING)
-                    .description("가입된 회원의 email")
+                fieldWithPath("data.email").type(STRING).description("가입된 회원의 email"),
+                fieldWithPath("data.username").type(STRING).description("가입된 회원의 사용자 이름"),
+                fieldWithPath("data.phoneNumber").type(STRING).description("가입된 회원의 전화 번호")
+
             ))
         );
     }
