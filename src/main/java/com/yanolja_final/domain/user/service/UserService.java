@@ -80,6 +80,7 @@ public class UserService {
         return registerNewUser(createUserRequest);
     }
 
+    @Transactional(readOnly = true)
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email)
             .orElseThrow(UserNotFoundException::new);
