@@ -53,8 +53,7 @@ public class EmailControllerTest {
 
     @Test
     void mailConfirm() throws Exception {
-        EmailRequest emailRequest = new EmailRequest();
-        emailRequest.setEmail("user@example.com");
+        EmailRequest emailRequest = new EmailRequest("user@example.com");
         given(emailService.sendVerificationEmail("user@example.com")).willReturn("200");
 
         this.mockMvc.perform(post("/v1/email/confirmation")

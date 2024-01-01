@@ -24,7 +24,7 @@ public class EmailController {
     @PostMapping("/confirmation")
     public ResponseEntity<ResponseDTO<Void>> mailConfirm(@RequestBody EmailRequest emailRequest)
         throws Exception {
-        userFacade.sendVerificationEmail(emailRequest.getEmail());
+        userFacade.sendVerificationEmail(emailRequest.email());
         return ResponseEntity.ok(ResponseDTO.ok());
     }
 
