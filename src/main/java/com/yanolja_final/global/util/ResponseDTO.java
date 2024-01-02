@@ -10,12 +10,12 @@ public class ResponseDTO<T> {
 
     private final int code;
     private final T data;
-    private final String errorMessage;
+    private final String message;
 
     @Builder
-    private ResponseDTO(int code, String errorMessage, T data) {
+    private ResponseDTO(int code, String message, T data) {
         this.code = code;
-        this.errorMessage = errorMessage;
+        this.message = message;
         this.data = data;
     }
 
@@ -23,7 +23,7 @@ public class ResponseDTO<T> {
         return ResponseDTO.<Void>builder()
             .code(HttpStatus.OK.value())
             .data(null)
-            .errorMessage(null)
+            .message(null)
             .build();
     }
 
@@ -31,14 +31,22 @@ public class ResponseDTO<T> {
         return ResponseDTO.<T>builder()
             .code(HttpStatus.OK.value())
             .data(data)
-            .errorMessage(null)
+            .message(null)
+            .build();
+    }
+
+    public static <T> ResponseDTO<T> okWithMessageAndData(String message, T data) {
+        return ResponseDTO.<T>builder()
+            .code(HttpStatus.OK.value())
+            .message(message)
+            .data(data)
             .build();
     }
 
     public static ResponseDTO<Void> error(ErrorCode errorCode) {
         return ResponseDTO.<Void>builder()
             .code(errorCode.getHttpStatus().value())
-            .errorMessage(errorCode.getMessage())
+            .message(errorCode.getMessage())
             .data(null)
             .build();
     }
@@ -46,7 +54,7 @@ public class ResponseDTO<T> {
     public static ResponseDTO<Void> errorWithMessage(HttpStatus httpStatus, String errorMessage) {
         return ResponseDTO.<Void>builder()
             .code(httpStatus.value())
-            .errorMessage(errorMessage)
+            .message(errorMessage)
             .data(null)
             .build();
     }

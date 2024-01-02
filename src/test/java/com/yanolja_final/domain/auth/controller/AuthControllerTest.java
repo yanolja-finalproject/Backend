@@ -51,7 +51,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @DisplayName("POST /auth/login (로그인)")
+    @DisplayName("POST /v1/users/email/login (로그인)")
     void login() throws Exception {
         // given
         UserFixture userFixture = fixture.signUp();
@@ -60,7 +60,7 @@ public class AuthControllerTest {
 
         // when
         ResultActions result = this.mockMvc
-            .perform(post("/v1/auth/login")
+            .perform(post("/v1/users/email/login")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
@@ -72,7 +72,7 @@ public class AuthControllerTest {
             .andExpect(cookie().exists("accessToken"));
 
         // restdocs
-        result.andDo(document("auth/login",
+        result.andDo(document("/v1/users/email/login",
             requestFields(
                 fieldWithPath("email").type(STRING)
                     .description("이메일"),

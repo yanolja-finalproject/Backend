@@ -53,16 +53,15 @@ public class EmailControllerTest {
 
     @Test
     void mailConfirm() throws Exception {
-        EmailRequest emailRequest = new EmailRequest();
-        emailRequest.setEmail("user@example.com");
+        EmailRequest emailRequest = new EmailRequest("user@example.com");
         given(emailService.sendVerificationEmail("user@example.com")).willReturn("200");
 
-        this.mockMvc.perform(post("/v1/email/confirmation")
+        this.mockMvc.perform(post("/v1/users/email/confirm")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(emailRequest)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.code", is(HttpStatus.OK.value())))
-            .andDo(document("v1/email/confirmation",
+            .andDo(document("/v1/users/email/confirm",
                 requestFields(
                     fieldWithPath("email").type(JsonFieldType.STRING).description("이메일 주소")
                 ),
@@ -76,10 +75,10 @@ public class EmailControllerTest {
     void verifyEmail() throws Exception {
         doNothing().when(emailService).verifyEmailCode("user@example.com", "123456");
 
-        this.mockMvc.perform(get("/v1/email/verify/123456")
+        this.mockMvc.perform(get("/v1/users/email/verify/123456")
                 .param("email", "user@example.com"))
             .andExpect(status().isOk())
-            .andDo(document("v1/email/verify",
+            .andDo(document("/v1/users/email/verify",
                 responseFields(
                     fieldWithPath("code").type(JsonFieldType.NUMBER).description("200")
                 )
