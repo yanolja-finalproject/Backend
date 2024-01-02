@@ -36,7 +36,7 @@ public class UserServiceTest {
     @DisplayName("회원가입에 성공한다")
     void signUp_success() {
         // given
-        CreateUserRequest request = new CreateUserRequest("a@a.com", "username","test","010-0000-0000");
+        CreateUserRequest request = new CreateUserRequest("a@a.com", "username","test","010-0000-0000",true);
 
         when(userRepository.findByEmail(anyString()))
             .thenReturn(Optional.empty());
@@ -52,7 +52,7 @@ public class UserServiceTest {
     @DisplayName("이미 등록된 이메일로 가입하려하면 예외가 발생한다")
     void signUp_fail_for_duplicated_email() {
         // given
-        CreateUserRequest request = new CreateUserRequest("a@a.com", "username","test","010-0000-0000");
+        CreateUserRequest request = new CreateUserRequest("a@a.com", "username","test","010-0000-0000",true);
 
         when(userRepository.findByEmail(anyString()))
             .thenReturn(Optional.of(new User()));
@@ -92,7 +92,7 @@ public class UserServiceTest {
     @DisplayName("이미 삭제된 사용자를 복구한다")
     void recoverUser_success() {
         // given
-        CreateUserRequest request = new CreateUserRequest("a@a.com", "username", "test", "010-0000-0000");
+        CreateUserRequest request = new CreateUserRequest("a@a.com", "username", "test", "010-0000-0000",true);
         User deletedUser = User.builder().email("a@a.com").build();
         deletedUser.delete(LocalDateTime.now().minusDays(1)); // 가정: 1일 전 삭제된 사용자
 

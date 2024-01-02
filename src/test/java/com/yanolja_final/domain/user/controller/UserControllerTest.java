@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.JsonFieldType.BOOLEAN;
 import static org.springframework.restdocs.payload.JsonFieldType.STRING;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -54,8 +55,9 @@ public class UserControllerTest {
         String username = "username1";
         String password = "password1";
         String phoneNumber = "010-1234-5678";
+        Boolean isTermsAgreed = true;
 
-        CreateUserRequest request = new CreateUserRequest(email, username, password, phoneNumber);
+        CreateUserRequest request = new CreateUserRequest(email, username, password, phoneNumber,isTermsAgreed);
         String content = objectMapper.writeValueAsString(request);
 
         // when
@@ -79,7 +81,8 @@ public class UserControllerTest {
                 fieldWithPath("email").type(STRING).description("이메일"),
                 fieldWithPath("username").type(STRING).description("사용자 이름"),
                 fieldWithPath("password").type(STRING).description("비밀번호"),
-                fieldWithPath("phoneNumber").type(STRING).description("전화 번호")
+                fieldWithPath("phoneNumber").type(STRING).description("전화 번호"),
+                fieldWithPath("isTermsAgreed").type(BOOLEAN).description("이용약관 동의 여부")
             ),
             responseFields(
                 fieldWithPath("code").ignored(),

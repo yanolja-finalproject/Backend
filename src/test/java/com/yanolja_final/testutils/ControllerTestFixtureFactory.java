@@ -23,7 +23,7 @@ public class ControllerTestFixtureFactory {
         CreateUserRequest request = makeSignUpRequest();
 
         ResponseDTO<CreateUserResponse> response = userService.registerOrRecoverUser(request);
-        Long userId = userRepository.findByEmail(request.email()).orElseThrow().getId(); // Assuming you want to get the user ID based on the email
+        Long userId = userRepository.findByEmail(request.email()).orElseThrow().getId();
         User user = userRepository.findById(userId).orElseThrow();
 
 
@@ -36,12 +36,14 @@ public class ControllerTestFixtureFactory {
         String username = "username" + signUpIdx;
         String password = "password" + signUpIdx;
         String phoneNumber = "010-0000-0000" + String.format("%04d", signUpIdx);
+        Boolean isTermsAgreed = true;
 
         return new CreateUserRequest(
             email,
             username,
             password,
-            phoneNumber
+            phoneNumber,
+            isTermsAgreed
         );
     }
 }
