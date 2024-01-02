@@ -10,12 +10,12 @@ public class ResponseDTO<T> {
 
     private final int code;
     private final T data;
-    private final String Message;
+    private final String message;
 
     @Builder
     private ResponseDTO(int code, String message, T data) {
         this.code = code;
-        this.Message = message;
+        this.message = message;
         this.data = data;
     }
 
