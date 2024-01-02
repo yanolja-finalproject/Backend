@@ -1,5 +1,8 @@
 package com.yanolja_final.domain.user.controller;
 
+import com.yanolja_final.domain.auth.controller.AuthController;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.yanolja_final.domain.user.dto.request.CreateUserRequest;
@@ -31,10 +34,18 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseDTO<Void>> deleteUser() {
+    public ResponseEntity<ResponseDTO<Void>> deleteUser(HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Long userId = Long.parseLong(authentication.getName());
         userFacade.deleteUser(userId);
+
+        Cookie emptyAccessToken = new Cookie(AuthController.ACCESS_TOKEN_COOKIE_NAME, null);
+        emptyAccessToken.setMaxAge(0);
+        emptyAccessToken.setHttpOnly(true);
+        emptyAccessToken.setPath("/");
+
+        response.addCookie(emptyAccessToken);
+
         return ResponseEntity.ok(ResponseDTO.ok());
     }
 }
