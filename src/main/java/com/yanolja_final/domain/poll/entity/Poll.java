@@ -3,8 +3,10 @@ package com.yanolja_final.domain.poll.entity;
 import com.yanolja_final.global.common.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -37,6 +39,10 @@ public class Poll extends BaseTimeEntity {
     @Column(length = 50, nullable = false)
     private String bHashtag;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "poll", cascade = CascadeType.REMOVE)
+    @OneToMany(
+        fetch = FetchType.LAZY,
+        mappedBy = "poll",
+        cascade = CascadeType.REMOVE
+    )
     private List<PollQuestion> pollQuestions;
 }

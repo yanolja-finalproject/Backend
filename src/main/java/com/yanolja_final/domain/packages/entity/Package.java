@@ -3,8 +3,10 @@ package com.yanolja_final.domain.packages.entity;
 import com.yanolja_final.global.common.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -75,8 +77,8 @@ public class Package extends BaseTimeEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "package_hashtag",
-        joinColumns = {@JoinColumn(name = "package_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "hashtag_id", referencedColumnName = "id")}
+        joinColumns = {@JoinColumn(name = "package_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))},
+        inverseJoinColumns = {@JoinColumn(name = "hashtag_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))}
     )
     private Set<Hashtag> hashtags;
 }

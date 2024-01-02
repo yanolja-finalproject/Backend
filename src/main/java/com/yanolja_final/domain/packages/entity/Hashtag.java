@@ -27,9 +27,8 @@ public class Hashtag extends BaseTimeEntity {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @ColumnDefault("0")
     @Column(nullable = false)
-    private Integer searchedCount;
+    private int searchedCount = 0;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "hashtags")
     private Set<Package> packages;

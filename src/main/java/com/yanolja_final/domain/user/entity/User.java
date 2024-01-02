@@ -7,8 +7,10 @@ import com.yanolja_final.domain.wish.entity.Wish;
 import com.yanolja_final.global.common.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,7 +47,7 @@ public class User extends BaseTimeEntity {
 
     private String encryptedPassword;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private UserImage image;
 
     private boolean isTermsAgreed = false; // 약관동의 여부
