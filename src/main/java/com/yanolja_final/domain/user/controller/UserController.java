@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/user")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserFacade userFacade;
 
-    @PostMapping
+    @PostMapping("/email")
     public ResponseEntity<ResponseDTO<CreateUserResponse>> signup(
         @Valid @RequestBody CreateUserRequest createUserRequest) {
         ResponseDTO<CreateUserResponse> response = userFacade.signUp(createUserRequest);

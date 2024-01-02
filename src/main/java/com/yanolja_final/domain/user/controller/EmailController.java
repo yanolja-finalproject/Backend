@@ -16,12 +16,12 @@ import com.yanolja_final.global.util.ResponseDTO;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/email")
+@RequestMapping("/v1/users/email")
 public class EmailController {
 
     private final UserFacade userFacade;
 
-    @PostMapping("/confirmation")
+    @PostMapping("/confirm")
     public ResponseEntity<ResponseDTO<Void>> mailConfirm(@RequestBody EmailRequest emailRequest)
         throws Exception {
         userFacade.sendVerificationEmail(emailRequest.email());

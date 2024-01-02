@@ -24,32 +24,32 @@ include::{snippets}/v1/user/response-fields.adoc[]
 
 === HttpRequest
 
-include::{snippets}/auth/login/http-request.adoc[]
+include::{snippets}/v1/users/email/login/http-request.adoc[]
 
-include::{snippets}/auth/login/request-fields.adoc[]
+include::{snippets}/v1/users/email/login/request-fields.adoc[]
 
 === HttpResponse
 
-include::{snippets}/auth/login/http-response.adoc[]
+include::{snippets}/v1/users/email/login/http-response.adoc[]
 
-include::{snippets}/auth/login/response-headers.adoc[]
+include::{snippets}/v1/users/email/login/response-headers.adoc[]
 
 == 인증번호 전송
 
 === HttpRequest
 
-include::{snippets}/email/confirmation/http-request.adoc[]
-include::{snippets}/email/confirmation/request-fields.adoc[]
+include::{snippets}/v1/users/email/confirm/http-request.adoc[]
+include::{snippets}/v1/users/email/confirm/request-fields.adoc[]
 
 === HttpResponse
 
-include::{snippets}/email/confirmation/http-response.adoc[]
+include::{snippets}/v1/users/email/confirm/http-response.adoc[]
 
 == 인증번호 비교
 
 === HttpRequest
 
-include::{snippets}/email/verify/http-request.adoc[]
+include::{snippets}/v1/users/email/verify/http-request.adoc[]
 
 === HttpResponse
 

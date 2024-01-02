@@ -60,7 +60,7 @@ public class UserControllerTest {
 
         // when
         ResultActions result = this.mockMvc
-            .perform(post("/v1/user")
+            .perform(post("/v1/users/email")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
@@ -74,7 +74,7 @@ public class UserControllerTest {
             .andExpect(jsonPath("data.phoneNumber", is(phoneNumber)));
 
         // restdocs
-        result.andDo(document("v1/user",
+        result.andDo(document("/v1/users/email",
             requestFields(
                 fieldWithPath("email").type(STRING).description("이메일"),
                 fieldWithPath("username").type(STRING).description("사용자 이름"),
