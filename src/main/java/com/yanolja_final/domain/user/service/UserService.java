@@ -37,14 +37,7 @@ public class UserService {
             throw new PhoneNumberAlreadyRegisteredException();
         });
         String encodedPassword = passwordEncoder.encode(createUserRequest.password());
-        User newUser = User.builder()
-            .email(createUserRequest.email())
-            .username(createUserRequest.username())
-            .encryptedPassword(encodedPassword)
-            .phoneNumber(createUserRequest.phoneNumber())
-            .authorities(DEFAULT_AUTHORITIES)
-            .isTermsAgreed(true)
-            .build();
+        User newUser = createUserRequest.toEntity(encodedPassword, DEFAULT_AUTHORITIES);
 
         userRepository.save(newUser);
         return ResponseDTO.okWithData(CreateUserResponse.fromEntity(newUser));

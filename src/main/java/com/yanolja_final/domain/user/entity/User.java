@@ -48,7 +48,7 @@ public class User extends BaseTimeEntity {
     private Set<Authority> authorities;
 
     @Builder
-    private User(String email, String phoneNumber, String username,
+    public  User(String email, String phoneNumber, String username,
         String encryptedPassword,boolean isTermsAgreed, Set<Authority> authorities) {
         this.email = email;
         this.phoneNumber = phoneNumber;
