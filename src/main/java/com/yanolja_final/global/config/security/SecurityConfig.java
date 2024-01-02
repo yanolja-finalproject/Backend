@@ -24,7 +24,7 @@ public class SecurityConfig {
 
     private static final String[] ALLOWED_PATHS
         = {
-        "/v1/docs/**", "/v1/email/**",
+        "/v1/docs/**", "/v1/users/email/**", "/h2-console/**"
     };
 
     private final JwtFilter jwtFilter;

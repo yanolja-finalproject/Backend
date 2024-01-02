@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/auth")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class AuthController {
 
     public static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
     private final AuthFacade authFacade;
 
-    @PostMapping("/login")
+    @PostMapping("/email/login")
     public ResponseEntity<ResponseDTO<Void>> login(
         @RequestBody @Valid LoginRequest loginRequest,
         HttpServletResponse response
@@ -37,5 +37,17 @@ public class AuthController {
 
         return ResponseEntity
             .ok(ResponseDTO.ok());
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ResponseDTO<Void>> logout(HttpServletResponse response) {
+        Cookie emptyAccessToken = new Cookie(ACCESS_TOKEN_COOKIE_NAME, null);
+        emptyAccessToken.setMaxAge(0);
+        emptyAccessToken.setHttpOnly(false);
+        emptyAccessToken.setPath("/");
+
+        response.addCookie(emptyAccessToken);
+
+        return ResponseEntity.ok(ResponseDTO.ok());
     }
 }
