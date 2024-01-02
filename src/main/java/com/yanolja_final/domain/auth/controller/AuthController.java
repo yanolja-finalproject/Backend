@@ -38,4 +38,16 @@ public class AuthController {
         return ResponseEntity
             .ok(ResponseDTO.ok());
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ResponseDTO<Void>> logout(HttpServletResponse response) {
+        Cookie emptyAccessToken = new Cookie(ACCESS_TOKEN_COOKIE_NAME, null);
+        emptyAccessToken.setMaxAge(0);
+        emptyAccessToken.setHttpOnly(true);
+        emptyAccessToken.setPath("/");
+
+        response.addCookie(emptyAccessToken);
+
+        return ResponseEntity.ok(ResponseDTO.ok());
+    }
 }
