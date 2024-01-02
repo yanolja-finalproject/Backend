@@ -61,7 +61,7 @@ asciidoctor {
     inputs.dir snippetsDir
     configurations 'asciidoctorExt'
     sources {
-        "**/user-api.adoc"
+        "**/index.adoc"
     }
     baseDirFollowsSourceFile()
     dependsOn test

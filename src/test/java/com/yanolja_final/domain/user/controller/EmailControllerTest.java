@@ -61,7 +61,7 @@ public class EmailControllerTest {
                 .content(new ObjectMapper().writeValueAsString(emailRequest)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.code", is(HttpStatus.OK.value())))
-            .andDo(document("/v1/users/email/confirm",
+            .andDo(document("v1/users/email/confirm",
                 requestFields(
                     fieldWithPath("email").type(JsonFieldType.STRING).description("이메일 주소")
                 ),
@@ -78,7 +78,7 @@ public class EmailControllerTest {
         this.mockMvc.perform(get("/v1/users/email/verify/123456")
                 .param("email", "user@example.com"))
             .andExpect(status().isOk())
-            .andDo(document("/v1/users/email/verify",
+            .andDo(document("v1/users/email/verify",
                 responseFields(
                     fieldWithPath("code").type(JsonFieldType.NUMBER).description("200")
                 )

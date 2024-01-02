@@ -76,7 +76,7 @@ public class UserControllerTest {
             .andExpect(jsonPath("data.phoneNumber", is(phoneNumber)));
 
         // restdocs
-        result.andDo(document("/v1/users/email",
+        result.andDo(document("v1/users/email",
             requestFields(
                 fieldWithPath("email").type(STRING).description("이메일"),
                 fieldWithPath("username").type(STRING).description("사용자 이름"),

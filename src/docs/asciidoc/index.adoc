@@ -10,15 +10,15 @@
 
 === HttpRequest
 
-include::{snippets}/v1/user/http-request.adoc[]
+include::{snippets}/v1/users/email/http-request.adoc[]
 
-include::{snippets}/v1/user/request-fields.adoc[]
+include::{snippets}/v1/users/email/request-fields.adoc[]
 
 === HttpResponse
 
-include::{snippets}/v1/user/http-response.adoc[]
+include::{snippets}/v1/users/email/http-response.adoc[]
 
-include::{snippets}/v1/user/response-fields.adoc[]
+include::{snippets}/v1/users/email/response-fields.adoc[]
 
 == 로그인
 
@@ -53,5 +53,5 @@ include::{snippets}/v1/users/email/verify/http-request.adoc[]
 
 === HttpResponse
 
-include::{snippets}/email/verify/http-response.adoc[]
+include::{snippets}/v1/users/email/verify/http-response.adoc[]
 

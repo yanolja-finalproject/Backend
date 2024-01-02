@@ -72,7 +72,7 @@ public class AuthControllerTest {
             .andExpect(cookie().exists("accessToken"));
 
         // restdocs
-        result.andDo(document("/v1/users/email/login",
+        result.andDo(document("v1/users/email/login",
             requestFields(
                 fieldWithPath("email").type(STRING)
                     .description("이메일"),
