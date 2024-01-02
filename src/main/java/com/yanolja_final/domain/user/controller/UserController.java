@@ -41,6 +41,7 @@ public class UserController {
 
         Cookie emptyAccessToken = new Cookie(AuthController.ACCESS_TOKEN_COOKIE_NAME, null);
         emptyAccessToken.setMaxAge(0);
+        emptyAccessToken.setHttpOnly(false);
         emptyAccessToken.setPath("/");
 
         response.addCookie(emptyAccessToken);
