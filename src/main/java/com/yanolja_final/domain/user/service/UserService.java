@@ -77,10 +77,21 @@ public class UserService {
     public User findByEmail(String email) {
         User user = userRepository.findByEmail(email)
             .orElseThrow(UserNotFoundException::new);
+        isDeletedUser(user);
+        return user;
+    }
+    
+    @Transactional(readOnly = true)
+    public User findById(Long id){
+        User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        isDeletedUser(user);
+        return user;
+    }
+
+    private static void isDeletedUser(User user) {
         if (user.isDeleted()) {
             throw new UserNotFoundException();
         }
-        return user;
     }
 
     public void deleteUser(Long userId) {
