@@ -22,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.email = :email AND u.deletedAt > :dateTime")
     Optional<User> findSoftDeletedByEmail(@Param("email") String email,
         @Param("dateTime") LocalDateTime dateTime);
+
+    Optional<User> findByEmailAndProvider(String email,String provider);
 }

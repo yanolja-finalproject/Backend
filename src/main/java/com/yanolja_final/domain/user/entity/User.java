@@ -47,6 +47,8 @@ public class User extends BaseTimeEntity {
 
     private String encryptedPassword;
 
+    private String provider;  //어떤 소셜로그인인지
+
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private UserImage image;
 
@@ -73,13 +75,14 @@ public class User extends BaseTimeEntity {
 
     @Builder
     public  User(String email, String phoneNumber, String username,
-        String encryptedPassword,boolean isTermsAgreed, Set<Authority> authorities) {
+        String encryptedPassword,boolean isTermsAgreed, Set<Authority> authorities, String provider) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
         this.isTermsAgreed = isTermsAgreed;
         this.authorities = authorities;
+        this.provider = provider;
     }
 
     public void updateCredentials(String username, String phoneNumber, String encryptedPassword) {
