@@ -7,6 +7,7 @@ import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.exception.UserNotFoundException;
 import com.yanolja_final.domain.user.repository.UserRepository;
 import com.yanolja_final.domain.wish.entity.Wish;
+import com.yanolja_final.domain.wish.exception.WishNotFoundException;
 import com.yanolja_final.domain.wish.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,13 @@ public class WishService {
 
         Wish wish = new Wish(user, aPackage);
         return wishRepository.save(wish);
+    }
+
+    public void deleteWish(Long wishId, Long userId) {
+
+        wishRepository.findByIdAndUserId(wishId, userId)
+            .orElseThrow(() -> new WishNotFoundException());
+
+        wishRepository.deleteById(wishId);
     }
 }
