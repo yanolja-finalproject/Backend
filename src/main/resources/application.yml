@@ -6,6 +6,32 @@ spring:
     driver-class-name: org.h2.Driver
   config:
     import: optional:file:.env[.properties]
+  spring:
+    security:
+      oauth2:
+        client:
+          registration:
+            google:
+              clientId: ${GOOGLE_ID}
+              clientSecret: ${GOOGLE_KEY}
+              scope:
+                - email
+                - profile
+            kakao:
+              clientId: ${KAKAO_ID}
+              clientSecret: ${KAKAO_KEY} # 카카오는 클라이언트 시크릿을 사용하지 않을 수도 있음.
+              authorizationGrantType: authorization_code
+              redirectUri: "{baseUrl}/login/oauth2/code/kakao"
+              scope:
+                - profile_nickname
+                - profile_image
+                - account_email
+              provider:
+                kakao:
+                  authorizationUri: https://kauth.kakao.com/oauth/authorize
+                  tokenUri: https://kauth.kakao.com/oauth/token
+                  userInfoUri: https://kapi.kakao.com/v2/user/me
+                  userNameAttribute: id
 
   h2:
     console:
