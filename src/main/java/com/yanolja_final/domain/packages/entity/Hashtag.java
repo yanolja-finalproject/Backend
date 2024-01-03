@@ -30,6 +30,9 @@ public class Hashtag extends BaseTimeEntity {
     @Column(nullable = false)
     private int searchedCount = 0;
 
+    @Column(length = 300, nullable = false)
+    private String image;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "hashtags")
     private Set<Package> packages;
 
