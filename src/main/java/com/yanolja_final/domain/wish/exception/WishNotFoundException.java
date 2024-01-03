@@ -8,7 +8,6 @@ public class WishNotFoundException extends ApplicationException {
     private static final ErrorCode ERROR_CODE = ErrorCode.WISH_NOT_FOUND;
 
     public WishNotFoundException() {
-
         super(ERROR_CODE);
     }
 }
