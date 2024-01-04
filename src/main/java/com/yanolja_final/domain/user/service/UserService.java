@@ -33,9 +33,6 @@ public class UserService {
         userRepository.findByEmail(createUserRequest.email()).ifPresent(user -> {
             throw new UserAlreadyRegisteredException();
         });
-        userRepository.findByPhoneNumber(createUserRequest.phoneNumber()).ifPresent(user -> {
-            throw new PhoneNumberAlreadyRegisteredException();
-        });
         String encodedPassword = passwordEncoder.encode(createUserRequest.password());
         User newUser = createUserRequest.toEntity(encodedPassword, DEFAULT_AUTHORITIES);
 
@@ -53,7 +50,6 @@ public class UserService {
             String encodedPassword = passwordEncoder.encode(createUserRequest.password());
             user.updateCredentials(
                 createUserRequest.username(),
-                createUserRequest.phoneNumber(),
                 encodedPassword
             );
             userRepository.save(user);

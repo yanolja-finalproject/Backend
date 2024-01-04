@@ -82,9 +82,8 @@ public class User extends BaseTimeEntity {
         this.authorities = authorities;
     }
 
-    public void updateCredentials(String username, String phoneNumber, String encryptedPassword) {
+    public void updateCredentials(String username, String encryptedPassword) {
         this.username = username;
-        this.phoneNumber = phoneNumber;
         this.encryptedPassword = encryptedPassword;
     }
 
