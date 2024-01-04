@@ -13,12 +13,17 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.format.DateTimeFormatter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Getter
+@Builder
+@AllArgsConstructor
 public class Review extends BaseTimeEntity {
 
     @Id
@@ -33,7 +38,7 @@ public class Review extends BaseTimeEntity {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
 
-    @Column(length = 300)
+    @Column(length = 20)
     private String content;
 
     private int productScore;
@@ -43,4 +48,9 @@ public class Review extends BaseTimeEntity {
     private int guideScore;
 
     private int appointmentScore;
+
+    public String getFormattedCreatedAt() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return createdAt.format(formatter);
+    }
 }
