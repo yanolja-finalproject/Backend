@@ -89,4 +89,9 @@ public class UserService {
         user.delete(LocalDateTime.now());
         userRepository.save(user);
     }
+
+    public User findById(Long id) {
+        return userRepository.findById(id)
+            .orElseThrow(() -> new UserNotFoundException());
+    }
 }
