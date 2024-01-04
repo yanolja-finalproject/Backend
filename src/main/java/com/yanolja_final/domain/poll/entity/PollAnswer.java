@@ -35,4 +35,15 @@ public class PollAnswer extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
+
+    @Builder
+    private PollAnswer(
+        Character answer,
+        Poll poll,
+        User user
+    ) {
+        this.answer = answer;
+        this.poll = poll;
+        this.user = user;
+    }
 }

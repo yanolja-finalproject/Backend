@@ -21,6 +21,10 @@ public enum ErrorCode {
     // AUTH
     INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 틀렸습니다."),
 
+    // POLL
+    POLL_NOT_FOUND(HttpStatus.BAD_REQUEST, "등록된 찬/반 토론 이벤트가 없습니다."),
+    ALREADY_VOTED(HttpStatus.FORBIDDEN, "이미 투표에 참여 하셨습니다."),
+
     // 5xx
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러");
 

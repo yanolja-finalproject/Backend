@@ -33,16 +33,22 @@ public class Poll extends BaseTimeEntity {
     @Column(length = 50, nullable = false)
     private String aHashtag;
 
+    @Column(length = 100, nullable = false)
+    private String aQuestion;
+
     @Column(length = 50, nullable = false)
     private String bName;
 
     @Column(length = 50, nullable = false)
     private String bHashtag;
 
+    @Column(length = 100, nullable = false)
+    private String bQuestion;
+
     @OneToMany(
         fetch = FetchType.LAZY,
         mappedBy = "poll",
         cascade = CascadeType.REMOVE
     )
-    private List<PollQuestion> pollQuestions;
+    private List<PollAnswer> pollAnswers;
 }
