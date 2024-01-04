@@ -37,7 +37,7 @@ public class PollAnswer extends BaseTimeEntity {
     private User user;
 
     @Builder
-    private PollAnswer(
+    public PollAnswer(
         Character answer,
         Poll poll,
         User user
