@@ -15,12 +15,7 @@ public record RegisterNoticeResponse(
 
     public static RegisterNoticeResponse from(Notice notice) {
 
-        // "content" : ["",""] 향후 수정 가능성 있음
         String[] splitContent = notice.getContent().split("\n");
-
-        if (splitContent.length == 0 || (splitContent.length == 1 && splitContent[0].isEmpty())) {
-            splitContent = new String[]{" "," "};
-        }
 
         return new RegisterNoticeResponse(
             notice.getId(),
