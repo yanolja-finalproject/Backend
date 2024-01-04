@@ -4,6 +4,7 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+
   config:
     import: optional:file:.env[.properties]
 
@@ -20,6 +21,14 @@ spring:
         show_sql: true
         format_sql: true
     defer-datasource-initialization: true
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        page-parameter: page
+        size-parameter: pageSize
+        one-indexed-parameters: true
 
 jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
