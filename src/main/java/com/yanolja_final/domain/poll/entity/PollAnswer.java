@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,14 +28,11 @@ public class PollAnswer extends BaseTimeEntity {
     @Column(nullable = false)
     private Character answer;
 
-    @Column(nullable = false)
-    private Long pollId;
+    @ManyToOne
+    @JoinColumn(name = "poll_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Poll poll;
 
     @ManyToOne
-    @JoinColumn(name = "poll_question_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private PollQuestion pollQuestion;
-
-    @OneToOne
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
 }

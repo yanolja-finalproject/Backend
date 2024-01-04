@@ -7,10 +7,8 @@ import com.yanolja_final.domain.wish.entity.Wish;
 import com.yanolja_final.global.common.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -59,21 +57,21 @@ public class User extends BaseTimeEntity {
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Order> orders;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Review> reviews;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Wish> wishes;
 
-    @OneToOne(mappedBy = "user")
-    private PollAnswer pollAnswer;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<PollAnswer> pollAnswers;
 
     @Builder
-    public  User(String email, String phoneNumber, String username,
-        String encryptedPassword,boolean isTermsAgreed, Set<Authority> authorities) {
+    public User(String email, String phoneNumber, String username,
+        String encryptedPassword, boolean isTermsAgreed, Set<Authority> authorities) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
