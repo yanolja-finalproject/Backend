@@ -47,9 +47,6 @@ public class User extends BaseTimeEntity {
 
     private String encryptedPassword;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private UserImage image;
-
     private boolean isTermsAgreed = false;
 
     @ManyToMany
