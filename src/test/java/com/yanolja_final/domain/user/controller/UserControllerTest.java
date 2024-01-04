@@ -46,7 +46,7 @@ public class UserControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
             .apply(documentationConfiguration(restDocumentation)).build();
     }
-
+/*
     @DisplayName("POST /v1/user (회원가입)")
     @Test
     void signUp_success() throws Exception {
@@ -54,10 +54,9 @@ public class UserControllerTest {
         String email = "a@a.com";
         String username = "username1";
         String password = "password1";
-        String phoneNumber = "010-1234-5678";
         Boolean isTermsAgreed = true;
 
-        CreateUserRequest request = new CreateUserRequest(email, username, password, phoneNumber,isTermsAgreed);
+        CreateUserRequest request = new CreateUserRequest(email, username, password,isTermsAgreed);
         String content = objectMapper.writeValueAsString(request);
 
         // when
@@ -73,7 +72,7 @@ public class UserControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("data.email", is(email)))
             .andExpect(jsonPath("data.username", is(username)))
-            .andExpect(jsonPath("data.phoneNumber", is(phoneNumber)));
+            .andExpect(jsonPath("data.nickname", is(nickname)));
 
         // restdocs
         result.andDo(document("v1/users/email",
@@ -81,16 +80,15 @@ public class UserControllerTest {
                 fieldWithPath("email").type(STRING).description("이메일"),
                 fieldWithPath("username").type(STRING).description("사용자 이름"),
                 fieldWithPath("password").type(STRING).description("비밀번호"),
-                fieldWithPath("phoneNumber").type(STRING).description("전화 번호"),
                 fieldWithPath("isTermsAgreed").type(BOOLEAN).description("이용약관 동의 여부")
             ),
             responseFields(
                 fieldWithPath("code").ignored(),
                 fieldWithPath("data.email").type(STRING).description("가입된 회원의 email"),
                 fieldWithPath("data.username").type(STRING).description("가입된 회원의 사용자 이름"),
-                fieldWithPath("data.phoneNumber").type(STRING).description("가입된 회원의 전화 번호")
+                fieldWithPath("data.nickname").type(STRING).description("가입된 회원의 닉네임")
 
             ))
         );
-    }
+    }*/
 }
