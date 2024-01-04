@@ -1,6 +1,5 @@
 package com.yanolja_final.global.exception;
 
-
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -26,6 +25,10 @@ public enum ErrorCode {
 
     // WISH
     WISH_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 찜ID 입니다."),
+
+    // REVIEW
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 리뷰입니다."),
+    UNAUTHORIZED_REVIEW_DELETION(HttpStatus.FORBIDDEN, "리뷰 삭제 권한이 없습니다."),
 
     // 5xx
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러");

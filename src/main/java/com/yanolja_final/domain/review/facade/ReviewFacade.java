@@ -26,4 +26,9 @@ public class ReviewFacade {
         Review review = reviewService.createReview(aPackage, user, request);
         return CreateReviewResponse.fromReview(review);
     }
+
+    public void deleteReview(Long packageId, Long reviewId, Long userId) {
+        Package aPackage = packageService.findById(packageId);
+        reviewService.deleteReview(aPackage, reviewId, userId);
+    }
 }

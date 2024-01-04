@@ -6,8 +6,10 @@ import com.yanolja_final.domain.review.facade.ReviewFacade;
 import com.yanolja_final.global.config.argumentresolver.LoginedUserId;
 
 import com.yanolja_final.global.util.ResponseDTO;
+
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,5 +29,11 @@ public class ReviewController {
         @LoginedUserId Long userId) {
         CreateReviewResponse response = reviewFacade.createReview(packageId, request, userId);
         return ResponseDTO.okWithData(response);
+    }
+
+    @DeleteMapping("/{packageId}/reviews/{reviewId}")
+    public ResponseDTO<Void> deleteReview(@PathVariable Long packageId, @PathVariable Long reviewId,@LoginedUserId Long userId) {
+        reviewFacade.deleteReview(packageId, reviewId,userId);
+        return ResponseDTO.ok();
     }
 }
