@@ -2,13 +2,19 @@ package com.yanolja_final.domain.review.service;
 
 import com.yanolja_final.domain.packages.entity.Package;
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
+import com.yanolja_final.domain.review.dto.response.ReviewResponse;
 import com.yanolja_final.domain.review.entity.Review;
 import com.yanolja_final.domain.review.exception.ReviewNotFoundException;
 import com.yanolja_final.domain.review.exception.UnauthorizedReviewDeletionException;
 import com.yanolja_final.domain.review.repository.ReviewRepository;
 import com.yanolja_final.domain.user.entity.User;
+
 import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,5 +36,9 @@ public class ReviewService {
             throw new UnauthorizedReviewDeletionException();
         }
         reviewRepository.deleteById(reviewId);
+    }
+
+    public Page<ReviewResponse> getUserReviews(Long userId, Pageable pageable) {
+        return reviewRepository.findByUserId(userId, pageable).map(ReviewResponse::fromReview);
     }
 }

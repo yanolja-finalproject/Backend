@@ -2,7 +2,7 @@ package com.yanolja_final.domain.review.dto.response;
 
 import com.yanolja_final.domain.review.entity.Review;
 
-    public record CreateReviewResponse (
+    public record ReviewResponse(
         Long reviewId,
         String content,
         String createdAt,
@@ -12,11 +12,11 @@ import com.yanolja_final.domain.review.entity.Review;
         int guideScore,
         int appointmentScore
     ) {
-        public static CreateReviewResponse fromReview(Review review) {
+        public static ReviewResponse fromReview(Review review) {
             double averageStars = (review.getProductScore() + review.getScheduleScore() +
                 review.getGuideScore() + review.getAppointmentScore()) / 4.0;
 
-            return new CreateReviewResponse(
+            return new ReviewResponse(
                 review.getId(),
                 review.getContent(),
                 review.getFormattedCreatedAt(),
