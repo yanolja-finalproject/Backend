@@ -28,12 +28,7 @@ public class PollService {
             throw new PollAnswerException();
         }
 
-        PollAnswer pollAnswer = PollAnswer.builder()
-            .answer(request.choose())
-            .poll(poll)
-            .user(user)
-            .build();
-
+        PollAnswer pollAnswer = request.toEntity(user, poll);
         pollAnswerRepository.save(pollAnswer);
     }
 }
