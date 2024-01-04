@@ -27,13 +27,14 @@ public record CreateUserRequest(
     Boolean isTermsAgreed
 ) {
 
-    public User toEntity(String encryptedPassword, Set<Authority> authorities) {
+    public User toEntity(String encryptedPassword, Set<Authority> authorities, String nickname) {
         return User.builder()
             .email(email)
             .username(username)
             .encryptedPassword(encryptedPassword)
             .authorities(authorities)
             .isTermsAgreed(isTermsAgreed)
+            .nickname(nickname)
             .build();
     }
 }
