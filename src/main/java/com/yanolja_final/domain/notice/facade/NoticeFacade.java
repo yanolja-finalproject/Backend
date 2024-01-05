@@ -2,9 +2,11 @@ package com.yanolja_final.domain.notice.facade;
 
 
 import com.yanolja_final.domain.notice.dto.request.RegisterNoticeRequest;
+import com.yanolja_final.domain.notice.dto.response.NoticeListResponse;
 import com.yanolja_final.domain.notice.dto.response.RegisterNoticeResponse;
 import com.yanolja_final.domain.notice.service.NoticeService;
 import com.yanolja_final.global.util.ResponseDTO;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,4 +23,11 @@ public class NoticeFacade {
             .registerNotice(registerNoticeRequest);
         return registerNoticeResponse;
     }
+
+    public ResponseDTO<List<NoticeListResponse>> getNoticeList() {
+
+        ResponseDTO<List<NoticeListResponse>> noticeListResponse = noticeService.getNoticeList();
+        return noticeListResponse;
+    }
+
 }
