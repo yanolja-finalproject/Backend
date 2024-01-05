@@ -22,22 +22,19 @@ public record CreateUserRequest(
     @Size(min = 6, message = "비밀 번호는 6자 이상이어야 합니다.")
     String password,
 
-    @NotNull(message = "전화 번호를 입력해 주세요.")
-    @Pattern(regexp = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$", message = "전화 번호 형식이 유효하지 않습니다.")
-    String phoneNumber,
 
     @NotNull(message = "이용약관 동의 여부를 체크해 주세요.")
     Boolean isTermsAgreed
 ) {
 
-    public User toEntity(String encryptedPassword, Set<Authority> authorities) {
+    public User toEntity(String encryptedPassword, Set<Authority> authorities, String nickname) {
         return User.builder()
             .email(email)
             .username(username)
             .encryptedPassword(encryptedPassword)
-            .phoneNumber(phoneNumber)
             .authorities(authorities)
             .isTermsAgreed(isTermsAgreed)
+            .nickname(nickname)
             .build();
     }
 }

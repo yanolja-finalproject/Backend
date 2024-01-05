@@ -7,10 +7,8 @@ import com.yanolja_final.domain.wish.entity.Wish;
 import com.yanolja_final.global.common.BaseTimeEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,8 +45,7 @@ public class User extends BaseTimeEntity {
 
     private String encryptedPassword;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private UserImage image;
+    private String nickname;
 
     private boolean isTermsAgreed = false;
 
@@ -73,18 +70,18 @@ public class User extends BaseTimeEntity {
 
     @Builder
     public  User(String email, String phoneNumber, String username,
-        String encryptedPassword,boolean isTermsAgreed, Set<Authority> authorities) {
+        String encryptedPassword,String nickname, boolean isTermsAgreed, Set<Authority> authorities) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
+        this.nickname = nickname;
         this.isTermsAgreed = isTermsAgreed;
         this.authorities = authorities;
     }
 
-    public void updateCredentials(String username, String phoneNumber, String encryptedPassword) {
+    public void updateCredentials(String username, String encryptedPassword) {
         this.username = username;
-        this.phoneNumber = phoneNumber;
         this.encryptedPassword = encryptedPassword;
     }
 
