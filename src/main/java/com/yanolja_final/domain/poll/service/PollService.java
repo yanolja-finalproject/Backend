@@ -29,13 +29,20 @@ public class PollService {
         if (pollAnswerRepository.existsByUserIdAndPollId(user.getId(), poll.getId())) {
             throw new PollAnswerException();
         }
-
         PollAnswer pollAnswer = request.toEntity(user, poll);
         pollAnswerRepository.save(pollAnswer);
+
+        if (Character.toLowerCase(request.choose()) == 'a') {
+            poll.incrementACount();
+        } else if (Character.toLowerCase(request.choose()) == 'b') {
+            poll.incrementBCount();
+        }
+        pollRepository.save(poll);
     }
 
     public Object findActivePoll(User user) {
         Poll poll = findPollMaxId();
+
         if (pollAnswerRepository.existsByUserIdAndPollId(user.getId(), poll.getId())) {
             return VotedResponse.from(poll);
         } else {
