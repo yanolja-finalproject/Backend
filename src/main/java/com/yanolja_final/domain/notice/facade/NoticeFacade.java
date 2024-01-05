@@ -3,7 +3,7 @@ package com.yanolja_final.domain.notice.facade;
 
 import com.yanolja_final.domain.notice.dto.request.RegisterNoticeRequest;
 import com.yanolja_final.domain.notice.dto.response.NoticeListResponse;
-import com.yanolja_final.domain.notice.dto.response.RegisterNoticeResponse;
+import com.yanolja_final.domain.notice.dto.response.NoticeResponse;
 import com.yanolja_final.domain.notice.service.NoticeService;
 import com.yanolja_final.global.util.ResponseDTO;
 import java.util.List;
@@ -16,11 +16,10 @@ public class NoticeFacade {
 
     private final NoticeService noticeService;
 
-    public ResponseDTO<RegisterNoticeResponse> registerNotice(
-        RegisterNoticeRequest registerNoticeRequest) {
+    public ResponseDTO<NoticeResponse> registerNotice(
+        RegisterNoticeRequest request) {
 
-        ResponseDTO<RegisterNoticeResponse> registerNoticeResponse = noticeService
-            .registerNotice(registerNoticeRequest);
+        ResponseDTO<NoticeResponse> registerNoticeResponse = noticeService.registerNotice(request);
         return registerNoticeResponse;
     }
 
@@ -30,4 +29,10 @@ public class NoticeFacade {
         return noticeListResponse;
     }
 
+    public ResponseDTO<NoticeResponse> getSpecificNotice(Long noticeId) {
+
+        ResponseDTO<NoticeResponse> specificNotice = noticeService.getSpecificNotice(noticeId);
+        return specificNotice;
+
+    }
 }
