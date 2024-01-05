@@ -6,8 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @NoArgsConstructor
@@ -23,4 +25,10 @@ public class Notice extends BaseTimeEntity {
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
+
+    @Builder
+    public Notice(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
