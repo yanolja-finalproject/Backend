@@ -14,8 +14,13 @@ public class PollFacade {
     private final UserService userService;
     private final PollService pollService;
 
-    public void submit(Long userId, PollAnswerRequest request) {
-        User user = userService.findById(userId);
-        pollService.submit(user, request);
+    public void savePollAnswer(Long userId, PollAnswerRequest request) {
+        User user = userService.findActiveUserById(userId);
+        pollService.savePollAnswer(user, request);
+    }
+
+    public Object findActivePoll(Long userId) {
+        User user = userService.findActiveUserById(userId);
+        return pollService.findActivePoll(user);
     }
 }

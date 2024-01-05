@@ -1,6 +1,8 @@
 package com.yanolja_final.domain.poll.service;
 
 import com.yanolja_final.domain.poll.controller.request.PollAnswerRequest;
+import com.yanolja_final.domain.poll.controller.response.NotVotedResponse;
+import com.yanolja_final.domain.poll.controller.response.VotedResponse;
 import com.yanolja_final.domain.poll.entity.Poll;
 import com.yanolja_final.domain.poll.entity.PollAnswer;
 import com.yanolja_final.domain.poll.exception.PollAnswerException;
@@ -21,8 +23,8 @@ public class PollService {
     private final PollAnswerRepository pollAnswerRepository;
 
     @Transactional
-    public void submit(User user, PollAnswerRequest request) {
-        Poll poll = pollRepository.findPollWithMaxId().orElseThrow(PollNotFoundException::new);
+    public void savePollAnswer(User user, PollAnswerRequest request) {
+        Poll poll = findPollMaxId();
 
         if (pollAnswerRepository.existsByUserIdAndPollId(user.getId(), poll.getId())) {
             throw new PollAnswerException();
@@ -30,5 +32,18 @@ public class PollService {
 
         PollAnswer pollAnswer = request.toEntity(user, poll);
         pollAnswerRepository.save(pollAnswer);
+    }
+
+    public Object findActivePoll(User user) {
+        Poll poll = findPollMaxId();
+        if (pollAnswerRepository.existsByUserIdAndPollId(user.getId(), poll.getId())) {
+            return VotedResponse.from(poll);
+        } else {
+            return NotVotedResponse.from(poll);
+        }
+    }
+
+    private Poll findPollMaxId() {
+        return pollRepository.findPollWithMaxId().orElseThrow(PollNotFoundException::new);
     }
 }
