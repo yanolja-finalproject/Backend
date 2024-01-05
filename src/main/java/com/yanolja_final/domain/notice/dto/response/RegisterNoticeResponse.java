@@ -1,8 +1,7 @@
 package com.yanolja_final.domain.notice.dto.response;
 
 import com.yanolja_final.domain.notice.entity.Notice;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 
 public record RegisterNoticeResponse(
     Long noticeId,
@@ -20,14 +19,9 @@ public record RegisterNoticeResponse(
         return new RegisterNoticeResponse(
             notice.getId(),
             notice.getTitle(),
-            getFormattedDate(notice.getCreatedAt()),
+            notice.getFormattedDate(),
             splitContent
         );
-    }
-
-    public static String getFormattedDate(LocalDateTime createdAt) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return createdAt.format(formatter);
     }
 }
 
