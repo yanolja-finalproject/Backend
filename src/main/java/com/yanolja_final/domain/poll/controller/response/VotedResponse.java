@@ -7,38 +7,17 @@ public record VotedResponse(
     boolean alreadySubmitted,
     String title,
     PollResultDTO A,
-    PollResultDTO B
+    PollResultDTO B,
+    Integer totalCount
 ) {
 
     public static VotedResponse from(Poll poll) {
         return new VotedResponse(
             true,
             poll.getTitle(),
-            getAPollResultInfo(poll),
-            getBPollResultInfo(poll)
+            PollResultDTO.getAPollResultInfo(poll),
+            PollResultDTO.getBPollResultInfo(poll),
+            poll.getACount()+ poll.getBCount()
         );
-    }
-
-    private static PollResultDTO getAPollResultInfo(Poll poll) {
-        return new PollResultDTO(
-            poll.getAName(),
-            poll.getAHashtag(),
-            calculatePercentage(poll.getACount(), poll.getACount() + poll.getBCount())
-        );
-    }
-
-    private static PollResultDTO getBPollResultInfo(Poll poll) {
-        return new PollResultDTO(
-            poll.getBName(),
-            poll.getBHashtag(),
-            calculatePercentage(poll.getBCount(), poll.getACount() + poll.getBCount())
-        );
-    }
-
-    private static int calculatePercentage(int count, int totalCount) {
-        if (totalCount == 0) {
-            return 0;
-        }
-        return (int) Math.round(((double) count / totalCount) * 100.0);
     }
 }

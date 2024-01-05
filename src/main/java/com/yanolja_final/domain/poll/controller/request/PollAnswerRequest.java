@@ -13,7 +13,7 @@ public record PollAnswerRequest(
 
     public PollAnswer toEntity(User user, Poll poll) {
         return PollAnswer.builder()
-            .answer(choose)
+            .answer(Character.toUpperCase(choose))
             .user(user)
             .poll(poll)
             .build();
