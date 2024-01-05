@@ -82,7 +82,7 @@ public class UserService {
     }
     
     @Transactional(readOnly = true)
-    public User findById(Long id){
+    public User findActiveUserById (Long id){
         User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         isDeletedUser(user);
         return user;
