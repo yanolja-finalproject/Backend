@@ -29,6 +29,9 @@ public class Theme extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String description;
 
+    @Column(length = 500, nullable = false)
+    private String imageUrl;
+
     @OneToOne
     @JoinColumn(name = "hashtag_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     Hashtag hashtag;
