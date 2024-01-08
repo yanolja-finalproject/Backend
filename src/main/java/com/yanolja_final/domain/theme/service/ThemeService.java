@@ -1,6 +1,7 @@
 package com.yanolja_final.domain.theme.service;
 
 import com.yanolja_final.domain.theme.entity.Theme;
+import com.yanolja_final.domain.theme.exception.ThemeNotFoundException;
 import com.yanolja_final.domain.theme.repository.ThemeRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +15,10 @@ public class ThemeService {
 
     public List<Theme> getAllThemes() {
         return themeRepository.findAll();
+    }
+
+    public Theme getThemeById(Long id) {
+        return themeRepository.findById(id)
+            .orElseThrow(() -> new ThemeNotFoundException());
     }
 }
