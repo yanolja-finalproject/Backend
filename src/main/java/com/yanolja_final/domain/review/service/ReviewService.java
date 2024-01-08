@@ -1,6 +1,6 @@
 package com.yanolja_final.domain.review.service;
 
-import com.yanolja_final.domain.packages.entity.Package;
+import com.yanolja_final.domain.order.entity.Order;
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
 import com.yanolja_final.domain.review.dto.response.ReviewResponse;
 import com.yanolja_final.domain.review.entity.Review;
@@ -24,8 +24,8 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    public Review createReview(Package aPackage, User user, CreateReviewRequest request) {
-        Review review = request.toReview(aPackage, user);
+    public Review createReview(Order  order, User user, CreateReviewRequest request) {
+        Review review = request.toReview(order, user);
         return reviewRepository.save(review);
     }
 

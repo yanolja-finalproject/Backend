@@ -7,6 +7,8 @@ import com.yanolja_final.domain.packages.service.PackageService;
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
 import com.yanolja_final.domain.review.dto.response.ReviewResponse;
 import com.yanolja_final.domain.review.entity.Review;
+import com.yanolja_final.domain.review.exception.ReviewAlreadyRegisteredException;
+import com.yanolja_final.domain.review.exception.UnauthorizedReviewAccessException;
 import com.yanolja_final.domain.review.service.ReviewService;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.service.UserService;
@@ -26,15 +28,21 @@ public class ReviewFacade {
     private final UserService userService;
     private final OrderService orderService;
 
-
     public ReviewResponse createReview(Long orderId, CreateReviewRequest request, Long userId) {
         Order order = orderService.findById(orderId);
-        Package aPackage = order.getAPackage();
-        User user = userService.findById(userId);
 
-        Review review = reviewService.createReview(aPackage, user, request);
+        if (!order.getUser().getId().equals(userId)) {
+            throw new UnauthorizedReviewAccessException();
+        }
+        if (order.getReview() != null) {
+            throw new ReviewAlreadyRegisteredException();
+        }
+        User user = userService.findById(userId);
+        Review review = reviewService.createReview(order, user, request);
+
         return ReviewResponse.fromReview(review);
     }
+
 
     public void deleteReview(Long reviewId, Long userId) {
         reviewService.deleteReview(reviewId, userId);

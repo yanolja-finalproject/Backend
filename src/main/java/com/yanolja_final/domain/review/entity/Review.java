@@ -1,6 +1,6 @@
 package com.yanolja_final.domain.review.entity;
 
-import com.yanolja_final.domain.packages.entity.Package;
+import com.yanolja_final.domain.order.entity.Order;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.global.common.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,12 +32,12 @@ public class Review extends BaseTimeEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "package_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
-    private Package aPackage;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @Column(length = 20)
     private String content;

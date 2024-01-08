@@ -1,8 +1,8 @@
 package com.yanolja_final.domain.review.dto.request;
 
+import com.yanolja_final.domain.order.entity.Order;
 import com.yanolja_final.domain.review.entity.Review;
 import com.yanolja_final.domain.user.entity.User;
-import com.yanolja_final.domain.packages.entity.Package;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -31,9 +31,9 @@ public record CreateReviewRequest(
     @Max(value = 5, message = "점수는 최대 5점까지 가능합니다.")
     int appointmentScore
 ) {
-    public Review toReview(Package aPackage, User user) {
+    public Review toReview(Order order, User user) {
         return Review.builder()
-            .aPackage(aPackage)
+            .order(order)
             .user(user)
             .content(this.content)
             .productScore(this.productScore)
