@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
+import java.util.Arrays;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,4 +42,11 @@ public class PackageDepartureOption extends BaseEntity {
     private Integer minReservationCount;
 
     private Integer maxReservationCount;
+
+    public Integer getMinPrice() {
+        return Arrays.asList(adultPrice, infantPrice, babyPrice).stream()
+            .filter(price -> price != null && price > 0)
+            .min(Integer::compare)
+            .orElse(0);
+    }
 }
