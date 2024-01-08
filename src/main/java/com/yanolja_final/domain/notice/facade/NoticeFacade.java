@@ -24,6 +24,7 @@ public class NoticeFacade {
         return registerNoticeResponse;
     }
 
+
     public ResponseDTO<List<NoticeListResponse>> getNoticeList() {
 
         ResponseDTO<List<NoticeListResponse>> noticeListResponse = noticeService.getNoticeList();
