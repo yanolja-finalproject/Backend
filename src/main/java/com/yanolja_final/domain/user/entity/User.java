@@ -45,8 +45,7 @@ public class User extends BaseTimeEntity {
 
     private String encryptedPassword;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private UserImage image;
+    private String nickname;
 
     private boolean isTermsAgreed = false;
 
@@ -70,19 +69,19 @@ public class User extends BaseTimeEntity {
     private List<PollAnswer> pollAnswers;
 
     @Builder
-    public User(String email, String phoneNumber, String username,
-        String encryptedPassword, boolean isTermsAgreed, Set<Authority> authorities) {
+    public  User(String email, String phoneNumber, String username,
+        String encryptedPassword,String nickname, boolean isTermsAgreed, Set<Authority> authorities) {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.encryptedPassword = encryptedPassword;
+        this.nickname = nickname;
         this.isTermsAgreed = isTermsAgreed;
         this.authorities = authorities;
     }
 
-    public void updateCredentials(String username, String phoneNumber, String encryptedPassword) {
+    public void updateCredentials(String username, String encryptedPassword) {
         this.username = username;
-        this.phoneNumber = phoneNumber;
         this.encryptedPassword = encryptedPassword;
     }
 

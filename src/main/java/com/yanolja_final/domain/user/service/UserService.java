@@ -4,7 +4,6 @@ import com.yanolja_final.domain.user.dto.request.CreateUserRequest;
 import com.yanolja_final.domain.user.dto.response.CreateUserResponse;
 import com.yanolja_final.domain.user.entity.Authority;
 import com.yanolja_final.domain.user.entity.User;
-import com.yanolja_final.domain.user.exception.PhoneNumberAlreadyRegisteredException;
 import com.yanolja_final.domain.user.exception.UserAlreadyRegisteredException;
 import com.yanolja_final.domain.user.exception.UserNotFoundException;
 import com.yanolja_final.domain.user.repository.UserRepository;
@@ -13,8 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +32,9 @@ public class UserService {
         userRepository.findByEmail(createUserRequest.email()).ifPresent(user -> {
             throw new UserAlreadyRegisteredException();
         });
-        userRepository.findByPhoneNumber(createUserRequest.phoneNumber()).ifPresent(user -> {
-            throw new PhoneNumberAlreadyRegisteredException();
-        });
         String encodedPassword = passwordEncoder.encode(createUserRequest.password());
-        User newUser = createUserRequest.toEntity(encodedPassword, DEFAULT_AUTHORITIES);
+        String randomNickname = generateRandomNickname();
+        User newUser = createUserRequest.toEntity(encodedPassword, DEFAULT_AUTHORITIES, randomNickname);
 
         userRepository.save(newUser);
         return ResponseDTO.okWithData(CreateUserResponse.fromEntity(newUser));
@@ -53,7 +50,6 @@ public class UserService {
             String encodedPassword = passwordEncoder.encode(createUserRequest.password());
             user.updateCredentials(
                 createUserRequest.username(),
-                createUserRequest.phoneNumber(),
                 encodedPassword
             );
             userRepository.save(user);
@@ -104,5 +100,9 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id)
             .orElseThrow(() -> new UserNotFoundException());
+    }
+
+    private String generateRandomNickname() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

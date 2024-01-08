@@ -35,14 +35,12 @@ public class ControllerTestFixtureFactory {
         String email = "test" + signUpIdx + "@naver.com";
         String username = "username" + signUpIdx;
         String password = "password" + signUpIdx;
-        String phoneNumber = "010-0000-0000" + String.format("%04d", signUpIdx);
         Boolean isTermsAgreed = true;
 
         return new CreateUserRequest(
             email,
             username,
             password,
-            phoneNumber,
             isTermsAgreed
         );
     }
