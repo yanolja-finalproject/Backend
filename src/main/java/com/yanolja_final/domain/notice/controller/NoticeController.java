@@ -32,25 +32,22 @@ public class NoticeController {
     ) {
         ResponseDTO<NoticeResponse> response = noticeFacade.registerNotice(
             registerNoticeRequest);
-
         return ResponseEntity.status(HttpStatus.valueOf(response.getCode())).body(response);
     }
+
 
     @GetMapping
     public ResponseEntity<ResponseDTO<List<NoticeListResponse>>> getNoticeList() {
-
         ResponseDTO<List<NoticeListResponse>> response = noticeFacade.getNoticeList();
-
         return ResponseEntity.status(HttpStatus.valueOf(response.getCode())).body(response);
-
     }
+
 
     @GetMapping("/{noticeId}")
     public ResponseEntity<ResponseDTO<NoticeResponse>> getSpecificNotice(
         @PathVariable Long noticeId
     ) {
         ResponseDTO<NoticeResponse> response = noticeFacade.getSpecificNotice(noticeId);
-
         return ResponseEntity.status(HttpStatusCode.valueOf(response.getCode())).body(response);
     }
 }
