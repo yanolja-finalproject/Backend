@@ -23,6 +23,9 @@ public enum ErrorCode {
     // PACKAGE
     PACKAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 패키지입니다."),
 
+    // ORDER
+    ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 주문입니다."),
+
     // WISH
     WISH_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 찜ID 입니다."),
 

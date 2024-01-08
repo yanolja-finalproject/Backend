@@ -30,11 +30,11 @@ public class ReviewController {
 
     private final ReviewFacade reviewFacade;
 
-    @PostMapping("/{packageId}")
-    public ResponseDTO<ReviewResponse> createReview(@PathVariable Long packageId,
+    @PostMapping("/orders/{orderId}")
+    public ResponseDTO<ReviewResponse> createReview(@PathVariable Long orderId,
         @RequestBody CreateReviewRequest request,
         @LoginedUserId Long userId) {
-        ReviewResponse response = reviewFacade.createReview(packageId, request, userId);
+        ReviewResponse response = reviewFacade.createReview(orderId, request, userId);
         return ResponseDTO.okWithData(response);
     }
 

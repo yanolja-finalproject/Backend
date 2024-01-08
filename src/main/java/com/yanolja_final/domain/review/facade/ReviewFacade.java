@@ -1,5 +1,7 @@
 package com.yanolja_final.domain.review.facade;
 
+import com.yanolja_final.domain.order.entity.Order;
+import com.yanolja_final.domain.order.service.OrderService;
 import com.yanolja_final.domain.packages.entity.Package;
 import com.yanolja_final.domain.packages.service.PackageService;
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
@@ -22,9 +24,12 @@ public class ReviewFacade {
     private final ReviewService reviewService;
     private final PackageService packageService;
     private final UserService userService;
+    private final OrderService orderService;
 
-    public ReviewResponse createReview(Long packageId, CreateReviewRequest request, Long userId) {
-        Package aPackage = packageService.findById(packageId);
+
+    public ReviewResponse createReview(Long orderId, CreateReviewRequest request, Long userId) {
+        Order order = orderService.findById(orderId);
+        Package aPackage = order.getAPackage();
         User user = userService.findById(userId);
 
         Review review = reviewService.createReview(aPackage, user, request);
