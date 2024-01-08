@@ -92,4 +92,8 @@ public class Package extends BaseEntity {
             @JoinColumn(name = "hashtag_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))}
     )
     private Set<Hashtag> hashtags;
+
+    public String getNationName() {
+        return this.nation.getName();
+    }
 }

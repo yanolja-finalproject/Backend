@@ -34,7 +34,6 @@ public record CreateUserRequest(
             .encryptedPassword(encryptedPassword)
             .authorities(authorities)
             .isTermsAgreed(isTermsAgreed)
-            .nickname(nickname)
             .build();
     }
 }
