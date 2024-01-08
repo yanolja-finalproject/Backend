@@ -3,7 +3,7 @@ package com.yanolja_final.domain.notice.controller;
 
 import com.yanolja_final.domain.notice.dto.request.RegisterNoticeRequest;
 import com.yanolja_final.domain.notice.dto.response.NoticeListResponse;
-import com.yanolja_final.domain.notice.dto.response.RegisterNoticeResponse;
+import com.yanolja_final.domain.notice.dto.response.NoticeResponse;
 import com.yanolja_final.domain.notice.facade.NoticeFacade;
 import com.yanolja_final.global.util.ResponseDTO;
 import jakarta.validation.Valid;
@@ -25,10 +25,10 @@ public class NoticeController {
     private final NoticeFacade noticeFacade;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<RegisterNoticeResponse>> createNotice(
+    public ResponseEntity<ResponseDTO<NoticeResponse>> createNotice(
         @Valid @RequestBody RegisterNoticeRequest registerNoticeRequest
     ) {
-        ResponseDTO<RegisterNoticeResponse> response = noticeFacade.registerNotice(
+        ResponseDTO<NoticeResponse> response = noticeFacade.registerNotice(
             registerNoticeRequest);
 
         return ResponseEntity.status(HttpStatus.valueOf(response.getCode())).body(response);

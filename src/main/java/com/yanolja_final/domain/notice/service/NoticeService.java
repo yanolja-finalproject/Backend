@@ -2,7 +2,7 @@ package com.yanolja_final.domain.notice.service;
 
 import com.yanolja_final.domain.notice.dto.request.RegisterNoticeRequest;
 import com.yanolja_final.domain.notice.dto.response.NoticeListResponse;
-import com.yanolja_final.domain.notice.dto.response.RegisterNoticeResponse;
+import com.yanolja_final.domain.notice.dto.response.NoticeResponse;
 import com.yanolja_final.domain.notice.entity.Notice;
 import com.yanolja_final.domain.notice.repository.NoticeRepository;
 import com.yanolja_final.global.util.ResponseDTO;
@@ -16,13 +16,13 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
-    public ResponseDTO<RegisterNoticeResponse> registerNotice(
+    public ResponseDTO<NoticeResponse> registerNotice(
         RegisterNoticeRequest registerNoticeRequest) {
 
         Notice notice = registerNoticeRequest.toEntity();
         Notice newNotice = noticeRepository.save(notice);
 
-        return ResponseDTO.okWithData(RegisterNoticeResponse.from(newNotice));
+        return ResponseDTO.okWithData(NoticeResponse.fromNotice(newNotice));
 
     }
 
