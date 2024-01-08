@@ -10,15 +10,12 @@ import com.yanolja_final.domain.review.entity.Review;
         int productScore,
         int scheduleScore,
         int guideScore,
-        int appointmentScore,
-        String userNickname
+        int appointmentScore
 
     ) {
         public static ReviewResponse fromReview(Review review) {
             double averageStars = (review.getProductScore() + review.getScheduleScore() +
                 review.getGuideScore() + review.getAppointmentScore()) / 4.0;
-
-            String maskedNickname = maskNickname(review.getUser().getNickname());
 
             return new ReviewResponse(
                 review.getId(),
@@ -28,18 +25,7 @@ import com.yanolja_final.domain.review.entity.Review;
                 review.getProductScore(),
                 review.getScheduleScore(),
                 review.getGuideScore(),
-                review.getAppointmentScore(),
-                maskedNickname
+                review.getAppointmentScore()
             );
         }
-        private static String maskNickname(String nickname) {
-            if (nickname.length() > 4) {
-                String visiblePart = nickname.substring(0, nickname.length() - 4);
-                return visiblePart + "****";
-            } else {
-                // 닉네임 길이가 4자 미만인 경우, 전체를 마스킹 처리
-                return "****";
-            }
-        }
-
     }
