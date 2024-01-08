@@ -1,4 +1,4 @@
-package com.yanolja_final.domain.faq.entity;
+package com.yanolja_final.domain.packages.entity;
 
 import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
@@ -12,18 +12,12 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Faq extends BaseEntity {
+public class PackageIntroImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String title;
-
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
-
-    @Column(length = 100, nullable = false)
-    private String categories;
+    @Column(length = 300, nullable = false)
+    private String imageUrl;
 }
