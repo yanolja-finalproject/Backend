@@ -1,6 +1,7 @@
 package com.yanolja_final.domain.order.entity;
 
 import com.yanolja_final.domain.packages.entity.Package;
+import com.yanolja_final.domain.review.entity.Review;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.global.common.SoftDeletableBaseEntity;
 import jakarta.persistence.Column;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +36,9 @@ public class Order extends SoftDeletableBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Package aPackage;
+
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    private Review review;
 
     @Column(nullable = false)
     private Long availableDateId;
