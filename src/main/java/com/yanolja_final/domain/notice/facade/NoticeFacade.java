@@ -16,19 +16,20 @@ public class NoticeFacade {
 
     private final NoticeService noticeService;
 
-    public ResponseDTO<NoticeResponse> registerNotice(
-        RegisterNoticeRequest registerNoticeRequest) {
-
-        ResponseDTO<NoticeResponse> registerNoticeResponse = noticeService
-            .registerNotice(registerNoticeRequest);
-        return registerNoticeResponse;
+    public ResponseDTO<NoticeResponse> registerNotice(RegisterNoticeRequest request) {
+        ResponseDTO<NoticeResponse> response = noticeService.registerNotice(request);
+        return response;
     }
 
 
     public ResponseDTO<List<NoticeListResponse>> getNoticeList() {
-
-        ResponseDTO<List<NoticeListResponse>> noticeListResponse = noticeService.getNoticeList();
-        return noticeListResponse;
+        ResponseDTO<List<NoticeListResponse>> response = noticeService.getNoticeList();
+        return response;
     }
 
+
+    public ResponseDTO<NoticeResponse> getSpecificNotice(Long noticeId) {
+        ResponseDTO<NoticeResponse> response = noticeService.getSpecificNotice(noticeId);
+        return response;
+    }
 }
