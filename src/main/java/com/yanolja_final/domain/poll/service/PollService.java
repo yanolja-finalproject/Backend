@@ -5,6 +5,7 @@ import com.yanolja_final.domain.poll.controller.response.NotVotedResponse;
 import com.yanolja_final.domain.poll.controller.response.VotedResponse;
 import com.yanolja_final.domain.poll.entity.Poll;
 import com.yanolja_final.domain.poll.entity.PollAnswer;
+import com.yanolja_final.domain.poll.exception.InvalidOptionException;
 import com.yanolja_final.domain.poll.exception.PollAnswerException;
 import com.yanolja_final.domain.poll.exception.PollNotFoundException;
 import com.yanolja_final.domain.poll.repository.PollAnswerRepository;
@@ -32,14 +33,29 @@ public class PollService {
 
         PollAnswer pollAnswer = request.toEntity(user, poll);
         pollAnswerRepository.save(pollAnswer);
+
+        updatePollCount(request.choose(), poll);
+        pollRepository.save(poll);
     }
 
     public Object findActivePoll(User user) {
         Poll poll = findPollMaxId();
-        if (pollAnswerRepository.existsByUserIdAndPollId(user.getId(), poll.getId())) {
-            return VotedResponse.from(poll);
-        } else {
-            return NotVotedResponse.from(poll);
+
+        return pollAnswerRepository.existsByUserIdAndPollId(user.getId(), poll.getId())
+            ? VotedResponse.from(poll)
+            : NotVotedResponse.from(poll);
+    }
+
+    private void updatePollCount(char option, Poll poll) {
+        switch (Character.toUpperCase(option)) {
+            case 'A':
+                poll.incrementACount();
+                break;
+            case 'B':
+                poll.incrementBCount();
+                break;
+            default:
+                throw new InvalidOptionException();
         }
     }
 

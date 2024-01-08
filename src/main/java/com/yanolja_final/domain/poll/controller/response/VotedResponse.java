@@ -7,31 +7,17 @@ public record VotedResponse(
     boolean alreadySubmitted,
     String title,
     PollResultDTO A,
-    PollResultDTO B
+    PollResultDTO B,
+    Integer totalCount
 ) {
 
-    public static VotedResponse from(Poll poll){
+    public static VotedResponse from(Poll poll) {
         return new VotedResponse(
             true,
             poll.getTitle(),
-            getAPollResultInfo(poll),
-            getBPollResultInfo(poll)
-        );
-    }
-
-    private static PollResultDTO getAPollResultInfo(Poll poll){
-        return new PollResultDTO(
-            poll.getAName(),
-            poll.getAHashtag(),
-            100
-        );
-    }
-
-    private static PollResultDTO getBPollResultInfo(Poll poll){
-        return new PollResultDTO(
-            poll.getBName(),
-            poll.getBHashtag(),
-            0
+            PollResultDTO.getAPollResultInfo(poll),
+            PollResultDTO.getBPollResultInfo(poll),
+            poll.getACount()+ poll.getBCount()
         );
     }
 }

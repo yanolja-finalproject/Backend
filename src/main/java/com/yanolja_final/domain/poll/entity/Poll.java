@@ -36,6 +36,9 @@ public class Poll extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String aQuestion;
 
+    @Column(nullable = false)
+    private Integer aCount=0;
+
     @Column(length = 50, nullable = false)
     private String bName;
 
@@ -45,10 +48,21 @@ public class Poll extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String bQuestion;
 
+    @Column(nullable = false)
+    private Integer bCount=0;
+
     @OneToMany(
         fetch = FetchType.LAZY,
         mappedBy = "poll",
         cascade = CascadeType.REMOVE
     )
     private List<PollAnswer> pollAnswers;
+
+    public void incrementACount() {
+        this.aCount++;
+    }
+
+    public void incrementBCount() {
+        this.bCount++;
+    }
 }
