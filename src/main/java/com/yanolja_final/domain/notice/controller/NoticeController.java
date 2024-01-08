@@ -36,9 +36,7 @@ public class NoticeController {
 
     @GetMapping
     public ResponseEntity<ResponseDTO<List<NoticeListResponse>>> getNoticeList() {
-
         ResponseDTO<List<NoticeListResponse>> response = noticeFacade.getNoticeList();
-
         return ResponseEntity.status(HttpStatus.valueOf(response.getCode())).body(response);
 
     }
