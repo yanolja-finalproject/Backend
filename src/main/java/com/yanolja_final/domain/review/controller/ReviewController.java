@@ -2,6 +2,7 @@ package com.yanolja_final.domain.review.controller;
 
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
 import com.yanolja_final.domain.review.dto.response.ReviewResponse;
+import com.yanolja_final.domain.review.dto.response.ReviewSummaryResponse;
 import com.yanolja_final.domain.review.facade.ReviewFacade;
 import com.yanolja_final.global.config.argumentresolver.LoginedUserId;
 import com.yanolja_final.global.util.PaginationUtils;
@@ -53,5 +54,10 @@ public class ReviewController {
         Map<String, Object> response = PaginationUtils.createPageResponse(reviewsPage);
 
         return ResponseEntity.ok(ResponseDTO.okWithData(response));
+    }
+    @GetMapping("/packages/{packageId}/list/summary")
+    public ResponseDTO<ReviewSummaryResponse> getPackageReviewsSummary(@PathVariable Long packageId) {
+        ReviewSummaryResponse summary = reviewFacade.getPackageReviewsSummary(packageId);
+        return ResponseDTO.okWithData(summary);
     }
 }
