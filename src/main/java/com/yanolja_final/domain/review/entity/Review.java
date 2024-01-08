@@ -2,7 +2,7 @@ package com.yanolja_final.domain.review.entity;
 
 import com.yanolja_final.domain.packages.entity.Package;
 import com.yanolja_final.domain.user.entity.User;
-import com.yanolja_final.global.common.BaseTimeEntity;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Review extends BaseTimeEntity {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

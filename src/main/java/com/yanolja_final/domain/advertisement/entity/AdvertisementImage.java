@@ -1,6 +1,6 @@
 package com.yanolja_final.domain.advertisement.entity;
 
-import com.yanolja_final.global.common.BaseTimeEntity;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "advertisement_imageurl")
 @NoArgsConstructor
 @Getter
-public class AdvertisementImage extends BaseTimeEntity {
+public class AdvertisementImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +29,6 @@ public class AdvertisementImage extends BaseTimeEntity {
     @JoinColumn(name = "ad_id", nullable = false, foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     Advertisement advertisement;
 
-    @Column(length = 300, nullable = false) // name 필드의 길이 제한 설정
+    @Column(length = 300, nullable = false)
     String imageUrl;
 }

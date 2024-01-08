@@ -1,6 +1,6 @@
 package com.yanolja_final.domain.packages.entity;
 
-import com.yanolja_final.global.common.BaseTimeEntity;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
@@ -14,7 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import java.sql.Time;
+import jakarta.persistence.OneToOne;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
@@ -23,23 +24,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Package extends BaseTimeEntity {
+public class Package extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Time departureTime;
+    private LocalTime departureTime;
 
     @Column(nullable = false)
-    private Time endTime;
+    private LocalTime endTime;
 
-    @Column(length = 30, nullable = false)
-    private String nationName;
+    @OneToOne(mappedBy = "package")
+    private Nation nation;
 
-    @Column(length = 30, nullable = false)
-    private String continentName;
+    @OneToOne(mappedBy = "package")
+    private Continent continent;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -50,8 +50,8 @@ public class Package extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String info;
 
-    @Column(name = "intro_image_url", length = 500, nullable = false)
-    private String introImage;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage", cascade = CascadeType.REMOVE)
+    private List<PackageIntroImage> introImages;
 
     @Column(nullable = false)
     private Integer lodgeDays;
@@ -59,17 +59,26 @@ public class Package extends BaseTimeEntity {
     @Column(nullable = false)
     private Integer tripDays;
 
-    @Column(name = "inclusion_list_json", columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String inclusionList;
 
-    @Column(name = "exclusion_list_json", columnDefinition = "TEXT", nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String exclusionList;
 
     @Column(nullable = false)
-    private Integer viewedCount;
+    private Integer viewedCount = 0;
+
+    @Column(nullable = false)
+    private Integer purchasedCount = 0;
+
+    @Column(nullable = false)
+    private Integer shoppingCount = 0;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String schedules;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage", cascade = CascadeType.REMOVE)
-    private List<PackageAvailableDate> availableDates;
+    private List<PackageDepartureOption> availableDates;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage", cascade = CascadeType.REMOVE)
     private List<PackageImage> images;
@@ -77,8 +86,10 @@ public class Package extends BaseTimeEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "package_hashtag",
-        joinColumns = {@JoinColumn(name = "package_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))},
-        inverseJoinColumns = {@JoinColumn(name = "hashtag_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))}
+        joinColumns = {
+            @JoinColumn(name = "package_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))},
+        inverseJoinColumns = {
+            @JoinColumn(name = "hashtag_id", referencedColumnName = "id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))}
     )
     private Set<Hashtag> hashtags;
 }
