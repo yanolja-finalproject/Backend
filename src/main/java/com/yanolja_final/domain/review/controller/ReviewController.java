@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/packages")
+@RequestMapping("/v1/reviews")
 @RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewFacade reviewFacade;
 
-    @PostMapping("/{packageId}/reviews")
+    @PostMapping("/{packageId}")
     public ResponseDTO<ReviewResponse> createReview(@PathVariable Long packageId,
         @RequestBody CreateReviewRequest request,
         @LoginedUserId Long userId) {
@@ -38,13 +38,13 @@ public class ReviewController {
         return ResponseDTO.okWithData(response);
     }
 
-    @DeleteMapping("/{packageId}/reviews/{reviewId}")
-    public ResponseDTO<Void> deleteReview(@PathVariable Long packageId, @PathVariable Long reviewId,@LoginedUserId Long userId) {
-        reviewFacade.deleteReview(packageId, reviewId,userId);
+    @DeleteMapping("/{reviewId}")
+    public ResponseDTO<Void> deleteReview(@PathVariable Long reviewId,@LoginedUserId Long userId) {
+        reviewFacade.deleteReview(reviewId,userId);
         return ResponseDTO.ok();
     }
 
-    @GetMapping("/reviews")
+    @GetMapping("/my")
     public ResponseEntity<ResponseDTO<Map<String, Object>>> getUserReviews(
         @LoginedUserId Long userId,
         @PageableDefault(size = 5) Pageable pageable) {

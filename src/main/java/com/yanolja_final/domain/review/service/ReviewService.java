@@ -29,7 +29,7 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    public void deleteReview(Package aPackage, Long reviewId, Long userId) {
+    public void deleteReview(Long reviewId, Long userId) {
         Review review = reviewRepository.findById(reviewId)
             .orElseThrow(() -> new ReviewNotFoundException());
         if (!review.getUser().getId().equals(userId)) {

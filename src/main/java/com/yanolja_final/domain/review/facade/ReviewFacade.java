@@ -31,9 +31,8 @@ public class ReviewFacade {
         return ReviewResponse.fromReview(review);
     }
 
-    public void deleteReview(Long packageId, Long reviewId, Long userId) {
-        Package aPackage = packageService.findById(packageId);
-        reviewService.deleteReview(aPackage, reviewId, userId);
+    public void deleteReview(Long reviewId, Long userId) {
+        reviewService.deleteReview(reviewId, userId);
     }
 
     public Page<ReviewResponse> getUserReviews(Long userId, Pageable pageable) {
