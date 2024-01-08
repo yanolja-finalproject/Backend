@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,8 +32,7 @@ public class UserService {
             throw new UserAlreadyRegisteredException();
         });
         String encodedPassword = passwordEncoder.encode(createUserRequest.password());
-        String randomNickname = generateRandomNickname();
-        User newUser = createUserRequest.toEntity(encodedPassword, DEFAULT_AUTHORITIES, randomNickname);
+        User newUser = createUserRequest.toEntity(encodedPassword, DEFAULT_AUTHORITIES);
 
         userRepository.save(newUser);
         return ResponseDTO.okWithData(CreateUserResponse.fromEntity(newUser));
@@ -89,9 +87,5 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id)
             .orElseThrow(() -> new UserNotFoundException());
-    }
-
-    private String generateRandomNickname() {
-        return UUID.randomUUID().toString().substring(0, 8);
     }
 }
