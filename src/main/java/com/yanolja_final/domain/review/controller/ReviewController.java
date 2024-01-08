@@ -55,6 +55,7 @@ public class ReviewController {
 
         return ResponseEntity.ok(ResponseDTO.okWithData(response));
     }
+
     @GetMapping("/packages/{packageId}/list/summary")
     public ResponseDTO<ReviewSummaryResponse> getPackageReviewsSummary(@PathVariable Long packageId) {
         ReviewSummaryResponse summary = reviewFacade.getPackageReviewsSummary(packageId);

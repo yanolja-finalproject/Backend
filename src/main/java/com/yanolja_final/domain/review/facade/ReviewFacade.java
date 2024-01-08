@@ -12,10 +12,8 @@ import com.yanolja_final.domain.review.service.ReviewService;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.service.UserService;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
