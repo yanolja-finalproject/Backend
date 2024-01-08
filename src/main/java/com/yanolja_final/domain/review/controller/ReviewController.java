@@ -60,4 +60,15 @@ public class ReviewController {
         ReviewSummaryResponse summary = reviewFacade.getPackageReviewsSummary(packageId);
         return ResponseDTO.okWithData(summary);
     }
+
+    @GetMapping("/packages/{packageId}/list")
+    public ResponseEntity<ResponseDTO<Map<String, Object>>> getPackageReviews(
+        @PathVariable Long packageId,
+        @PageableDefault(size = 6) Pageable pageable) {
+
+        Page<ReviewResponse> reviewsPage = reviewFacade.getPackageReviews(packageId, pageable);
+        Map<String, Object> response = PaginationUtils.createPageResponse(reviewsPage);
+
+        return ResponseEntity.ok(ResponseDTO.okWithData(response));
+    }
 }

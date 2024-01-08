@@ -58,4 +58,9 @@ public class ReviewFacade {
         List<Review> reviews = reviewService.findReviewsByPackageId(packageId);
         return ReviewSummaryResponse.fromReviews(reviews);
     }
+
+    public Page<ReviewResponse> getPackageReviews(Long packageId, Pageable pageable) {
+        return reviewService.findPackageReviews(packageId, pageable)
+            .map(ReviewResponse::fromReview);
+    }
 }
