@@ -5,7 +5,6 @@ import com.yanolja_final.domain.user.entity.User;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 
@@ -27,14 +26,13 @@ public record CreateUserRequest(
     Boolean isTermsAgreed
 ) {
 
-    public User toEntity(String encryptedPassword, Set<Authority> authorities, String nickname) {
+    public User toEntity(String encryptedPassword, Set<Authority> authorities) {
         return User.builder()
             .email(email)
             .username(username)
             .encryptedPassword(encryptedPassword)
             .authorities(authorities)
             .isTermsAgreed(isTermsAgreed)
-            .nickname(nickname)
             .build();
     }
 }
