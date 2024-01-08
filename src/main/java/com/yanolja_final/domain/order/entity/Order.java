@@ -38,7 +38,7 @@ public class Order extends SoftDeletableBaseEntity {
     @Column(nullable = false)
     private Long availableDateId;
 
-    @Column(name = "order_code", length = 100, nullable = false)
+    @Column(length = 100, nullable = false)
     private String code;
 
     @Column(name = "detail", columnDefinition = "TEXT", nullable = false)
