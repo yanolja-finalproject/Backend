@@ -95,8 +95,4 @@ public class Package extends BaseEntity {
     public String getNationName() {
         return this.nation.getName();
     }
-
-    public List<PackageDepartureOption> getDepartureOptions() {
-        return this.departureOptions;
-    }
 }
