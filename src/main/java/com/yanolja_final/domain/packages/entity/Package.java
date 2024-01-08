@@ -35,10 +35,10 @@ public class Package extends BaseEntity {
     @Column(nullable = false)
     private LocalTime endTime;
 
-    @OneToOne(mappedBy = "package")
+    @OneToOne
     private Nation nation;
 
-    @OneToOne(mappedBy = "package")
+    @OneToOne
     private Continent continent;
 
     @Column(length = 100, nullable = false)
@@ -50,7 +50,7 @@ public class Package extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String info;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PackageIntroImage> introImages;
 
     @Column(nullable = false)
@@ -77,10 +77,10 @@ public class Package extends BaseEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String schedules;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PackageDepartureOption> availableDates;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PackageImage> images;
 
     @ManyToMany(fetch = FetchType.LAZY)
