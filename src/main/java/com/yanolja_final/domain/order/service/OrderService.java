@@ -9,6 +9,7 @@ import com.yanolja_final.domain.packages.entity.Package;
 import com.yanolja_final.domain.user.entity.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +33,8 @@ public class OrderService {
 
     private String generateDailyOrderCode() {
         LocalDate today = LocalDate.now();
-        LocalDateTime lastOrderDateTime = orderRepository.findTopCreatedAt();
-        if (dailyOrderCount == -1 || !today.equals(lastOrderDateTime.toLocalDate())) {
+        Optional<LocalDateTime> lastOrderDateTime = orderRepository.findLatestCreatedAt();
+        if (dailyOrderCount == -1 || !today.equals(lastOrderDateTime.get().toLocalDate())) {
             dailyOrderCount = 0;
         }
 
