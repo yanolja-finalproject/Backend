@@ -2,16 +2,17 @@ package com.yanolja_final.domain.review.facade;
 
 import com.yanolja_final.domain.order.entity.Order;
 import com.yanolja_final.domain.order.service.OrderService;
-import com.yanolja_final.domain.packages.entity.Package;
-import com.yanolja_final.domain.packages.service.PackageService;
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
 import com.yanolja_final.domain.review.dto.response.ReviewResponse;
+import com.yanolja_final.domain.review.dto.response.ReviewSummaryResponse;
 import com.yanolja_final.domain.review.entity.Review;
 import com.yanolja_final.domain.review.exception.ReviewAlreadyRegisteredException;
 import com.yanolja_final.domain.review.exception.UnauthorizedReviewAccessException;
 import com.yanolja_final.domain.review.service.ReviewService;
 import com.yanolja_final.domain.user.entity.User;
 import com.yanolja_final.domain.user.service.UserService;
+
+import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +25,6 @@ import org.springframework.stereotype.Service;
 public class ReviewFacade {
 
     private final ReviewService reviewService;
-    private final PackageService packageService;
     private final UserService userService;
     private final OrderService orderService;
 
@@ -50,5 +50,15 @@ public class ReviewFacade {
 
     public Page<ReviewResponse> getUserReviews(Long userId, Pageable pageable) {
         return reviewService.getUserReviews(userId, pageable);
+    }
+
+    public ReviewSummaryResponse getPackageReviewsSummary(Long packageId) {
+        List<Review> reviews = reviewService.findReviewsByPackageId(packageId);
+        return ReviewSummaryResponse.fromReviews(reviews);
+    }
+
+    public Page<ReviewResponse> getPackageReviews(Long packageId, Pageable pageable) {
+        return reviewService.findPackageReviews(packageId, pageable)
+            .map(ReviewResponse::fromReview);
     }
 }

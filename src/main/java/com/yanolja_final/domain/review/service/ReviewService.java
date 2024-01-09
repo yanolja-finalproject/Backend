@@ -11,6 +11,7 @@ import com.yanolja_final.domain.user.entity.User;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -40,5 +41,13 @@ public class ReviewService {
 
     public Page<ReviewResponse> getUserReviews(Long userId, Pageable pageable) {
         return reviewRepository.findByUserId(userId, pageable).map(ReviewResponse::fromReview);
+    }
+
+    public List<Review> findReviewsByPackageId(Long packageId) {
+        return reviewRepository.findReviewsByPackageIdSummary(packageId);
+    }
+
+    public Page<Review> findPackageReviews(Long packageId, Pageable pageable) {
+        return reviewRepository.findReviewsByPackageId(packageId, pageable);
     }
 }
