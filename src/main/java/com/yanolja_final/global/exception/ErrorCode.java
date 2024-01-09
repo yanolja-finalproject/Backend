@@ -1,11 +1,11 @@
 package com.yanolja_final.global.exception;
 
+
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCode {
-
 
     // EMAIL
     EMAIL_SENDING_FAILURE(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 전송에 실패했습니다."),
@@ -34,6 +34,9 @@ public enum ErrorCode {
     UNAUTHORIZED_REVIEW_DELETION(HttpStatus.FORBIDDEN, "리뷰 삭제 권한이 없습니다."),
     UNAUTHORIZED_REVIEW_ACCESS(HttpStatus.FORBIDDEN, "리뷰 작성 권한이 없습니다."),
     REVIEW_ALREADY_REGISTERED(HttpStatus.BAD_REQUEST, "이미 리뷰를 작성하였습니다."),
+
+    //NOTICE
+    NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 공지사항ID 입니다."),
 
     // 5xx
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러");
