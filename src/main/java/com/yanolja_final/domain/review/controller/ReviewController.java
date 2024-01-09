@@ -2,6 +2,7 @@ package com.yanolja_final.domain.review.controller;
 
 import com.yanolja_final.domain.review.dto.request.CreateReviewRequest;
 import com.yanolja_final.domain.review.dto.response.ReviewResponse;
+import com.yanolja_final.domain.review.dto.response.ReviewSummaryResponse;
 import com.yanolja_final.domain.review.facade.ReviewFacade;
 import com.yanolja_final.global.config.argumentresolver.LoginedUserId;
 import com.yanolja_final.global.util.PaginationUtils;
@@ -50,6 +51,23 @@ public class ReviewController {
         @PageableDefault(size = 5) Pageable pageable) {
 
         Page<ReviewResponse> reviewsPage = reviewFacade.getUserReviews(userId, pageable);
+        Map<String, Object> response = PaginationUtils.createPageResponse(reviewsPage);
+
+        return ResponseEntity.ok(ResponseDTO.okWithData(response));
+    }
+
+    @GetMapping("/packages/{packageId}/list/summary")
+    public ResponseDTO<ReviewSummaryResponse> getPackageReviewsSummary(@PathVariable Long packageId) {
+        ReviewSummaryResponse summary = reviewFacade.getPackageReviewsSummary(packageId);
+        return ResponseDTO.okWithData(summary);
+    }
+
+    @GetMapping("/packages/{packageId}/list")
+    public ResponseEntity<ResponseDTO<Map<String, Object>>> getPackageReviews(
+        @PathVariable Long packageId,
+        @PageableDefault(size = 6) Pageable pageable) {
+
+        Page<ReviewResponse> reviewsPage = reviewFacade.getPackageReviews(packageId, pageable);
         Map<String, Object> response = PaginationUtils.createPageResponse(reviewsPage);
 
         return ResponseEntity.ok(ResponseDTO.okWithData(response));
