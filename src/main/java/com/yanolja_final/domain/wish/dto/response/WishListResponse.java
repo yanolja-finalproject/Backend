@@ -22,7 +22,8 @@ public record WishListResponse(
         this(
             wish.getAPackage().getId(),
             wish.getId(),
-            null, // TODO 상품 소개 이미지 여러 개로 늘어났습니다
+            wish.getAPackage().getIntroImages().isEmpty() ? null :
+                wish.getAPackage().getIntroImages().get(0).getImageUrl(),
             wish.getAPackage().getNationName(),
             wish.getAPackage().getTitle(),
             wish.getAPackage().getHashtags().stream().map(Hashtag::getName).collect(Collectors.toList()),
