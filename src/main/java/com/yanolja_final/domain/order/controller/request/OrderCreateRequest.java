@@ -6,12 +6,18 @@ import com.yanolja_final.domain.order.dto.OrderDetailInfoDTO;
 import com.yanolja_final.domain.order.entity.Order;
 import com.yanolja_final.domain.packages.entity.Package;
 import com.yanolja_final.domain.user.entity.User;
+import jakarta.validation.constraints.NotNull;
 
 public record OrderCreateRequest(
+
+    @NotNull
     Long packageId,
+    @NotNull
     Long availableDateId,
     String requestMessage,
+    @NotNull
     Boolean cancelFeeAgreement,
+    @NotNull
     OrderGuestInfoRequest numberOfPeople
 ) {
 

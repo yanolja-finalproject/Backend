@@ -26,6 +26,7 @@ public enum ErrorCode {
 
     // ORDER
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 주문입니다."),
+    MAXIMUN_CAPACITY(HttpStatus.BAD_REQUEST, "허용인원이 초과되었습니다."),
 
     // WISH
     WISH_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 찜ID 입니다."),
