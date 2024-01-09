@@ -4,6 +4,7 @@ import com.yanolja_final.domain.faq.dto.request.RegisterFaqRequest;
 import com.yanolja_final.domain.faq.dto.response.FaqListResponse;
 import com.yanolja_final.domain.faq.dto.response.FaqResponse;
 import com.yanolja_final.domain.faq.entity.Faq;
+import com.yanolja_final.domain.faq.exception.FaqNotFoundException;
 import com.yanolja_final.domain.faq.repository.FaqRepository;
 import com.yanolja_final.global.util.ResponseDTO;
 import java.util.List;
@@ -26,6 +27,13 @@ public class FaqService {
     public ResponseDTO<List<FaqListResponse>> getFaqList() {
         List<Faq> faqs = faqRepository.findAll();
         List<FaqListResponse> response = FaqListResponse.fromFaqs(faqs);
+        return ResponseDTO.okWithData(response);
+    }
+
+    public ResponseDTO<FaqResponse> getSpecificFaq(Long faqId) {
+        Faq faq = faqRepository.findById(faqId)
+            .orElseThrow(() -> new FaqNotFoundException());
+        FaqResponse response = FaqResponse.fromFaq(faq);
         return ResponseDTO.okWithData(response);
     }
 }

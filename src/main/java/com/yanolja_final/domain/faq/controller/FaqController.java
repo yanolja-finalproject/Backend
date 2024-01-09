@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,14 @@ public class FaqController {
     @GetMapping
     public ResponseEntity<ResponseDTO<List<FaqListResponse>>> getFaqList() {
         ResponseDTO<List<FaqListResponse>> response = faqFacade.getFaqList();
+        return ResponseEntity.status(HttpStatus.valueOf(response.getCode())).body(response);
+    }
+
+    @GetMapping("/{faqId}")
+    public ResponseEntity<ResponseDTO<FaqResponse>> getSpecificFaq(
+        @PathVariable Long faqId
+    ) {
+        ResponseDTO<FaqResponse> response = faqFacade.getSpecificFaq(faqId);
         return ResponseEntity.status(HttpStatus.valueOf(response.getCode())).body(response);
     }
 }

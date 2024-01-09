@@ -24,4 +24,9 @@ public class FaqFacade {
         ResponseDTO<List<FaqListResponse>> response = faqService.getFaqList();
         return response;
     }
+
+    public ResponseDTO<FaqResponse> getSpecificFaq(Long faqId) {
+        ResponseDTO<FaqResponse> response = faqService.getSpecificFaq(faqId);
+        return response;
+    }
 }
