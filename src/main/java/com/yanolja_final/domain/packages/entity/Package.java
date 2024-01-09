@@ -96,4 +96,8 @@ public class Package extends BaseEntity {
     public String getNationName() {
         return this.nation.getName();
     }
+
+    public void plusPurchasedCount(){
+        this.purchasedCount++;
+    }
 }

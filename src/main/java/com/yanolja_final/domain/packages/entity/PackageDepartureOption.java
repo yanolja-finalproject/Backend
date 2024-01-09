@@ -41,4 +41,8 @@ public class PackageDepartureOption extends BaseEntity {
     private Integer minReservationCount;
 
     private Integer maxReservationCount;
+
+    public void incrementCurrentReservationCount(int totalPeople) {
+        this.currentReservationCount += totalPeople;
+    }
 }

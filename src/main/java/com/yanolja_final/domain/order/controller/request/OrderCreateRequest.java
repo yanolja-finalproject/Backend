@@ -12,8 +12,7 @@ public record OrderCreateRequest(
     Long availableDateId,
     String requestMessage,
     Boolean cancelFeeAgreement,
-
-    OrderGuestInfoRequest numOfPeople
+    OrderGuestInfoRequest numberOfPeople
 ) {
 
     public Order toEntity(User user, Package aPackage, String code) {
@@ -28,15 +27,16 @@ public record OrderCreateRequest(
 
     private String createOrderDetailInfo() {
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
-            OrderDetailInfoDTO
-                details =
-                new OrderDetailInfoDTO(requestMessage, cancelFeeAgreement, numOfPeople);
-
+            OrderDetailInfoDTO details =
+                new OrderDetailInfoDTO(requestMessage, cancelFeeAgreement, numberOfPeople);
             return objectMapper.writeValueAsString(details);
         } catch (JsonProcessingException e) {
             return null;
         }
+    }
+
+    public int totalCount() {
+        return numberOfPeople.adult() + numberOfPeople.baby() + numberOfPeople.infant();
     }
 }

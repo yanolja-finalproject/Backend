@@ -11,14 +11,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private static int dailyOrderCount = -1;
 
+    @Transactional
     public OrderCreateResponse create(User user, Package aPackage,
         OrderCreateRequest request) {
         String code = generateDailyOrderCode();
