@@ -1,7 +1,6 @@
 package com.yanolja_final.domain.packages.entity;
 
-import com.yanolja_final.domain.theme.entity.Theme;
-import com.yanolja_final.global.common.BaseTimeEntity;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -9,16 +8,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @NoArgsConstructor
 @Getter
-public class Hashtag extends BaseTimeEntity {
+public class Hashtag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +27,9 @@ public class Hashtag extends BaseTimeEntity {
     @Column(nullable = false)
     private int searchedCount = 0;
 
+    @Column(length = 300, nullable = false)
+    private String imageUrl;
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "hashtags")
     private Set<Package> packages;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "hashtag")
-    private Theme theme;
 }

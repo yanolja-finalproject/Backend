@@ -37,4 +37,9 @@ public class OrderService {
             today.getYear(), today.getMonthValue(), today.getDayOfMonth(), ++dailyOrderCount);
         return orderCode;
     }
+
+    public Order findById(Long orderId) {
+        return orderRepository.findById(orderId)
+            .orElseThrow(() -> new OrderNotFoundException());
+    }
 }

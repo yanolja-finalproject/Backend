@@ -1,7 +1,7 @@
 package com.yanolja_final.domain.wish.dto.response;
 
 import com.yanolja_final.domain.packages.entity.Hashtag;
-import com.yanolja_final.domain.packages.entity.PackageAvailableDate;
+import com.yanolja_final.domain.packages.entity.PackageDepartureOption;
 import com.yanolja_final.domain.wish.entity.Wish;
 
 import java.util.List;
@@ -22,11 +22,11 @@ public record WishListResponse(
         this(
             wish.getAPackage().getId(),
             wish.getId(),
-            wish.getAPackage().getIntroImage(),
+            null, // TODO 상품 소개 이미지 여러 개로 늘어났습니다
             wish.getAPackage().getNationName(),
             wish.getAPackage().getTitle(),
             wish.getAPackage().getHashtags().stream().map(Hashtag::getName).collect(Collectors.toList()),
-            wish.getAPackage().getAvailableDates().stream().mapToInt(PackageAvailableDate::getAdultPrice).min().orElse(0),
+            wish.getAPackage().getAvailableDates().stream().mapToInt(PackageDepartureOption::getAdultPrice).min().orElse(0),
             wish.getAPackage().getLodgeDays(),
             wish.getAPackage().getTripDays()
         );

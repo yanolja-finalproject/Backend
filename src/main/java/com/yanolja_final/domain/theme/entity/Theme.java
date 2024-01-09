@@ -1,7 +1,7 @@
 package com.yanolja_final.domain.theme.entity;
 
 import com.yanolja_final.domain.packages.entity.Hashtag;
-import com.yanolja_final.global.common.BaseTimeEntity;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Theme extends BaseTimeEntity {
+public class Theme extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +28,9 @@ public class Theme extends BaseTimeEntity {
 
     @Column(length = 100, nullable = false)
     private String description;
+
+    @Column(length = 500, nullable = false)
+    private String imageUrl;
 
     @OneToOne
     @JoinColumn(name = "hashtag_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))

@@ -1,11 +1,9 @@
 package com.yanolja_final.domain.packages.entity;
 
-import com.yanolja_final.global.common.BaseTimeEntity;
-import jakarta.persistence.CascadeType;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class PackageAvailableDate extends BaseTimeEntity {
+public class PackageDepartureOption extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +28,13 @@ public class PackageAvailableDate extends BaseTimeEntity {
     private Package aPackage;
 
     @Column(nullable = false)
-    private LocalDate departureDatetime;
+    private LocalDate departureDate;
 
     private Integer adultPrice;
 
-    @Column(name = "price_json", columnDefinition = "TEXT")
-    private String priceInfo;
+    private Integer infantPrice;
+
+    private Integer babyPrice;
 
     private Integer currentReservationCount;
 

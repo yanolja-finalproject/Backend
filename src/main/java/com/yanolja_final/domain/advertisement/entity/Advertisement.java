@@ -1,13 +1,10 @@
 package com.yanolja_final.domain.advertisement.entity;
 
 import com.yanolja_final.domain.packages.entity.Package;
-import com.yanolja_final.global.common.BaseTimeEntity;
-import jakarta.persistence.CascadeType;
+import com.yanolja_final.global.common.BaseEntity;
 import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Advertisement extends BaseTimeEntity {
+public class Advertisement extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +29,6 @@ public class Advertisement extends BaseTimeEntity {
 
     @Column(length = 30, nullable = false)
     private String name;
-
-    @Column(length = 100, nullable = false)
-    private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "advertisement")
     private List<AdvertisementImage> images;
@@ -48,10 +42,8 @@ public class Advertisement extends BaseTimeEntity {
     private Set<Package> packages;
 
     @Builder
-    private Advertisement(String name, String description, List<AdvertisementImage> images,
-        Set<Package> packages) {
+    private Advertisement(String name, List<AdvertisementImage> images, Set<Package> packages) {
         this.name = name;
-        this.description = description;
         this.images = images;
         this.packages = packages;
     }
