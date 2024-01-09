@@ -18,7 +18,7 @@ public record ThemePackageResponse(
 ) {
     public static ThemePackageResponse fromThemeAndPackages(Theme theme, Page<Package> packagesPage) {
         Integer minPrice = packagesPage.getContent().stream()
-            .flatMap(p -> p.getDepartureOptions().stream())
+            .flatMap(p -> p.getAvailableDates().stream())
             .mapToInt(PackageDepartureOption::getMinPrice)
             .min()
             .orElse(0);

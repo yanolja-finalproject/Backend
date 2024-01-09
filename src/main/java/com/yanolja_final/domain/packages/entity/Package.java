@@ -77,7 +77,7 @@ public class Package extends BaseEntity {
     private String schedules;
 
     @OneToMany(mappedBy = "aPackage", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<PackageDepartureOption> departureOptions = new ArrayList<>();
+    private List<PackageDepartureOption> AvailableDates = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PackageImage> images;
