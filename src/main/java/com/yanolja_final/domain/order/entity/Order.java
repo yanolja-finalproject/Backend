@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -38,9 +39,19 @@ public class Order extends BaseTimeEntity {
     @Column(nullable = false)
     private Long availableDateId;
 
-    @Column(name = "order_code", length = 100, nullable = false)
+    @Column(length = 100, nullable = false)
     private String code;
 
-    @Column(name="detail_json",columnDefinition = "TEXT", nullable = false)
+    @Column(name = "details", columnDefinition = "TEXT", nullable = false)
     private String detailInfo;
+
+    @Builder
+    public Order(User user, Package aPackage, Long availableDateId, String code,
+        String detailInfo) {
+        this.user = user;
+        this.aPackage = aPackage;
+        this.availableDateId = availableDateId;
+        this.code = code;
+        this.detailInfo = detailInfo;
+    }
 }
