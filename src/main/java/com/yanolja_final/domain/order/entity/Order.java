@@ -1,7 +1,9 @@
 package com.yanolja_final.domain.order.entity;
 
 import com.yanolja_final.domain.packages.entity.Package;
+import com.yanolja_final.domain.review.entity.Review;
 import com.yanolja_final.domain.user.entity.User;
+import com.yanolja_final.global.common.SoftDeletableBaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,10 +51,11 @@ public class Order extends SoftDeletableBaseEntity {
     private String detailInfo;
 
     @Builder
-    public Order(User user, Package aPackage, Long availableDateId, String code,
+    public Order(User user, Package aPackage, Review review, Long availableDateId, String code,
         String detailInfo) {
         this.user = user;
         this.aPackage = aPackage;
+        this.review = review;
         this.availableDateId = availableDateId;
         this.code = code;
         this.detailInfo = detailInfo;

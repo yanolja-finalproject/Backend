@@ -3,6 +3,7 @@ package com.yanolja_final.domain.order.service;
 import com.yanolja_final.domain.order.controller.request.OrderCreateRequest;
 import com.yanolja_final.domain.order.controller.response.OrderCreateResponse;
 import com.yanolja_final.domain.order.entity.Order;
+import com.yanolja_final.domain.order.exception.OrderNotFoundException;
 import com.yanolja_final.domain.order.repository.OrderRepository;
 import com.yanolja_final.domain.packages.entity.Package;
 import com.yanolja_final.domain.user.entity.User;
