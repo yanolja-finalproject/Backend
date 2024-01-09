@@ -29,6 +29,9 @@ public enum ErrorCode {
     // WISH
     WISH_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 찜ID 입니다."),
 
+    // THEME
+    THEME_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 테마 입니다."),
+
     // REVIEW
     REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 리뷰입니다."),
     UNAUTHORIZED_REVIEW_DELETION(HttpStatus.FORBIDDEN, "리뷰 삭제 권한이 없습니다."),

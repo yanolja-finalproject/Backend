@@ -7,8 +7,6 @@ import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -16,6 +14,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import lombok.Getter;
@@ -51,7 +50,7 @@ public class Package extends BaseEntity {
     private String info;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<PackageIntroImage> introImages;
+    private List<PackageIntroImage> introImages = new ArrayList<>();
 
     @Column(nullable = false)
     private Integer lodgeDays;
@@ -77,8 +76,8 @@ public class Package extends BaseEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String schedules;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<PackageDepartureOption> availableDates;
+    @OneToMany(mappedBy = "aPackage", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<PackageDepartureOption> AvailableDates = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<PackageImage> images;
