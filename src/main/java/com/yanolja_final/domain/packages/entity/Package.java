@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import java.time.LocalTime;
@@ -29,16 +30,16 @@ public class Package extends BaseEntity {
     @Id
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private LocalTime departureTime;
 
-    @Column(nullable = false)
+    @Column
     private LocalTime endTime;
 
-    @OneToOne
+    @ManyToOne
     private Nation nation;
 
-    @OneToOne
+    @ManyToOne
     private Continent continent;
 
     @Column(length = 100, nullable = false)
@@ -70,6 +71,9 @@ public class Package extends BaseEntity {
 
     @Column(nullable = false)
     private Integer purchasedCount = 0;
+
+    @Column(nullable = false)
+    private Integer monthlyPurchasedCount = 0;
 
     @Column(nullable = false)
     private Integer shoppingCount = 0;
