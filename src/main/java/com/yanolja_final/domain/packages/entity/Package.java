@@ -72,6 +72,9 @@ public class Package extends BaseEntity {
     private Integer purchasedCount = 0;
 
     @Column(nullable = false)
+    private Integer monthlyPurchasedCount = 0;
+
+    @Column(nullable = false)
     private Integer shoppingCount = 0;
 
     @Column(columnDefinition = "TEXT", nullable = false)
