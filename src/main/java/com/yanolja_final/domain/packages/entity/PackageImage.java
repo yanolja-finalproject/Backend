@@ -18,6 +18,9 @@ public class PackageImage extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Long packageId;
+
     @Column(length = 300, nullable = false)
     private String imageUrl;
 }
