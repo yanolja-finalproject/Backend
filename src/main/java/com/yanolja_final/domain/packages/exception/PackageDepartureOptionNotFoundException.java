@@ -5,7 +5,7 @@ import com.yanolja_final.global.exception.ErrorCode;
 
 public class PackageDepartureOptionNotFoundException extends ApplicationException {
 
-    private static final ErrorCode ERROR_CODE = ErrorCode.PACKAGE_NOT_FOUND;
+    private static final ErrorCode ERROR_CODE = ErrorCode.PACKAGE_DEPARTURE_OPTION_NOT_FOUND;
 
     public PackageDepartureOptionNotFoundException() {
 
