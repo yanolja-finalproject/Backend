@@ -38,6 +38,9 @@ public enum ErrorCode {
     //NOTICE
     NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 공지사항ID 입니다."),
 
+    //FAQ
+    FAQ_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 자주 묻는 질문ID 입니다."),
+
     // 5xx
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 에러");
 
